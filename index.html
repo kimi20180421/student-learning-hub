@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>奇点同行 · 学习站 V2 视觉稿</title>
+  <title>像素100&奇点同行 · 学习站 V2 视觉稿</title>
   <style>
     :root {
       --ink: #142650;
@@ -72,15 +72,19 @@
     .brand span { color: #6c7b9c; font-weight: 520; }
 
     .mark {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      color: #fff;
-      background: var(--blue);
-      box-shadow: 4px 5px 0 var(--ink);
-      transform: rotate(-4deg);
+      width: 32px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 32px;
+    }
+
+    .mark img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .hero {
@@ -200,7 +204,7 @@
       right: -5px;
       bottom: -35px;
       color: rgba(255,255,255,.055);
-      font-family: Georgia, serif;
+      font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
       font-size: 148px;
       font-weight: 700;
       line-height: 1;
@@ -261,7 +265,7 @@
     .small-course:nth-child(2) { background: #edf6ff; }
 
     .time {
-      font-family: Georgia, serif;
+      font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
       font-size: 18px;
       font-weight: 700;
     }
@@ -280,9 +284,21 @@
 
     .week-list { display: flex; flex-direction: column; }
 
+    .week-head {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1.2fr) 136px 100px 112px 108px;
+      align-items: center;
+      gap: 14px;
+      min-height: 42px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .week-row {
       display: grid;
-      grid-template-columns: 74px minmax(0, 1.2fr) 136px 100px 112px;
+      grid-template-columns: 74px minmax(0, 1.2fr) 136px 100px 112px 108px;
       align-items: center;
       gap: 14px;
       min-height: 76px;
@@ -291,21 +307,58 @@
     }
 
     .week-row:first-child { border-top: 0; }
-    .week-time { font-family: Georgia, serif; font-size: 17px; font-weight: 700; }
-    .week-title strong { display: block; margin-bottom: 4px; font-size: 14px; }
-    .week-title span, .teacher, .room { color: var(--muted); font-size: 12px; }
-
-    .audience {
-      width: fit-content;
-      padding: 5px 9px;
-      border-radius: 999px;
-      color: #315f50;
-      background: var(--mint);
-      font-size: 11px;
+    .week-time {
+      font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
+      font-size: 17px;
       font-weight: 700;
     }
+    .week-title strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .teacher, .audience, .room { color: var(--muted); font-size: 12px; }
 
-    .room { font-family: Georgia, serif; }
+    .room { font-family: "PingFang SC", "Hiragino Sans GB", sans-serif; }
+
+    .week-action-wrap {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .week-action {
+      min-width: 84px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      transition: all .18s ease;
+      white-space: nowrap;
+    }
+
+    .week-action--current {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+      box-shadow: 0 10px 20px rgba(49, 89, 217, .18);
+    }
+
+    .week-action--future {
+      color: var(--blue);
+      background: transparent;
+      border-color: rgba(49, 89, 217, .35);
+    }
+
+    .week-action--past {
+      min-width: auto;
+      height: auto;
+      padding: 0;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+    }
 
     .shortcut { padding: 26px 26px 22px; }
     .shortcut .section-head { margin-bottom: 15px; }
@@ -376,7 +429,9 @@
       .hero { align-items: flex-start; flex-direction: column; gap: 20px; }
       .date { text-align: left; }
       .today-grid { grid-template-columns: 1.12fr .88fr; }
-      .week-row { grid-template-columns: 68px 1fr 104px 84px; }
+      .week-head,
+      .week-row { grid-template-columns: 68px 1fr 104px 84px 92px; }
+      .week-head .room,
       .week-row .room { display: none; }
       .right { grid-template-columns: 1fr; }
       .panel-inner, .weekly { padding-inline: 22px; }
@@ -395,10 +450,8 @@
   <main class="page">
     <header>
       <div class="brand">
-        <div class="mark" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6.5h16M4 12h10M4 17.5h13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="12" r="2" fill="#ffc95b"/></svg>
-        </div>
-        奇点同行 <span>· 学习站</span>
+        <div class="mark"><img src="./logo.png" alt="像素100&奇点同行 logo" /></div>
+        像素100&奇点同行 <span>· 学习站</span>
       </div>
     </header>
 
@@ -408,8 +461,8 @@
         <h1>把今天这一步走稳，<mark>答案会在路上出现。</mark></h1>
       </div>
       <div class="date">
-        <strong>星期一</strong>
-        <span>2026年7月6日 · 第27周</span>
+        <strong id="currentWeekday">星期一</strong>
+        <span id="currentDateMeta">2026年7月6日 · 第1周</span>
       </div>
     </section>
 
@@ -419,16 +472,16 @@
           <div class="panel-inner">
             <div class="section-head">
               <h2>今日课程</h2>
-              <div class="note">3 节课程 · 开学第一天</div>
+              <div class="note" id="todayNote">3 节课程 · 第1周</div>
             </div>
             <div class="today-grid">
-              <article class="primary-course">
-                <div class="tag">10:00 即将开始</div>
-                <h3 class="course-title">校区开课迎新<br>& 破冰小会</h3>
-                <div class="meta">校区主教老师 · UX、视觉<br>腾讯会议：899-192-267</div>
-                <a class="join" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">进入会议 <span>→</span></a>
+              <article class="primary-course" id="todayPrimary">
+                <div class="tag" id="todayPrimaryTag">10:00 即将开始</div>
+                <h3 class="course-title" id="todayPrimaryTitle">校区开课迎新<br>& 破冰小会</h3>
+                <div class="meta" id="todayPrimaryMeta">校区主教老师 · UX、视觉<br>腾讯会议：899-192-267</div>
+                <a class="join" id="todayPrimaryLink" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">进入会议 <span>→</span></a>
               </article>
-              <div class="small-courses">
+              <div class="small-courses" id="todaySecondaryList">
                 <a class="small-course" href="https://meeting.tencent.com/dm/10FD66noRLym">
                   <div class="time">14:00</div>
                   <div><strong>开学第一课<br>先导课</strong><span>大老师 · 689-284-078</span></div>
@@ -444,12 +497,20 @@
           </div>
         </section>
 
-        <section class="panel weekly">
+        <section class="panel weekly" id="weekly-schedule">
           <div class="section-head">
             <h2>本周课程</h2>
-            <div class="note">第 27 周 · 3 节课程</div>
+            <div class="note" id="weeklyNote">第 1 周 · 3 节课程</div>
           </div>
-          <div class="week-list">
+          <div class="week-list" id="weekList">
+            <div class="week-head">
+              <div>时间</div>
+              <div>课程</div>
+              <div>主讲老师</div>
+              <div>适合班型</div>
+              <div class="room">会议号</div>
+              <div>操作</div>
+            </div>
             <a class="week-row" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">
               <div class="week-time">周一<br>10:00</div>
               <div class="week-title"><strong>校区开课迎新 & 破冰小会</strong><span>腾讯会议 · 点击进入</span></div>
@@ -479,14 +540,13 @@
         <section class="panel shortcut">
           <div class="section-head">
             <h2>快捷入口</h2>
-            <div class="note">常用服务</div>
           </div>
           <div class="shortcut-list">
-            <a class="shortcut-item" href="#">
+            <a class="shortcut-item" href="https://doc.weixin.qq.com/smartsheet/form/1_wpKBGPEQAANFlM_CL0S9dtU8fxLqQLuA_b0c4e8" target="_blank" rel="noreferrer">
               <div class="icon">▤</div>
               <div><strong>提交作业</strong><span>上传作业与修改稿</span></div><b>→</b>
             </a>
-            <a class="shortcut-item" href="#">
+            <a class="shortcut-item" href="https://doc.weixin.qq.com/smartsheet/form/1_wpKBGPEQAANFlM_CL0S9dtU8fxLqQLuA_bde771" target="_blank" rel="noreferrer">
               <div class="icon">✓</div>
               <div><strong>请假申请</strong><span>填写请假时间与原因</span></div><b>→</b>
             </a>
@@ -509,8 +569,252 @@
     </div>
   </main>
   <script>
+    const schedule = [
+      {
+        startsAt: "2026-07-01T10:00:00",
+        title: "校区开课迎新<br>& 破冰小会",
+        plainTitle: "校区开课迎新&破冰小会",
+        teacher: "校区主教老师",
+        audience: "UX、视觉",
+        room: "899-192-267",
+        href: "https://meeting.tencent.com/dm/GfidG3aIk2eO"
+      },
+      {
+        startsAt: "2026-07-01T14:30:00",
+        title: "开学第一课<br>先导课",
+        plainTitle: "开学第一课-先导课",
+        teacher: "大老师",
+        audience: "UX、视觉",
+        room: "689-284-078",
+        href: "https://meeting.tencent.com/dm/10FD66noRLym"
+      },
+      {
+        startsAt: "2026-07-01T16:30:00",
+        title: "书籍及资料<br>阅读方法",
+        plainTitle: "书籍及资料阅读方法",
+        teacher: "麻雀老师",
+        audience: "UX、视觉",
+        room: "407-351-735",
+        href: "https://meeting.tencent.com/dm/GA9ogFwV8rS0"
+      },
+      {
+        startsAt: "2026-07-02T10:30:00",
+        title: "如何搭建自己的<br>设计素材库",
+        plainTitle: "如何搭建自己的设计素材库",
+        teacher: "张老师",
+        audience: "UX、视觉",
+        room: "542-223-335",
+        href: "https://meeting.tencent.com/dm/a9A1t4AcSboD"
+      },
+      {
+        startsAt: "2026-07-02T14:30:00",
+        title: "设计师<br>能力模型",
+        plainTitle: "设计师能力模型",
+        teacher: "冯老师",
+        audience: "UX、视觉",
+        room: "520-394-503",
+        href: "https://meeting.tencent.com/dm/JQfEhJshVmBr"
+      },
+      {
+        startsAt: "2026-07-02T16:30:00",
+        title: "给新人的<br>AI通识课",
+        plainTitle: "给新人的AI通识课",
+        teacher: "三牛老师",
+        audience: "UX、视觉",
+        room: "538-917-643",
+        href: "https://meeting.tencent.com/dm/T7VHpw3flpzo"
+      },
+      {
+        startsAt: "2026-07-03T10:00:00",
+        title: "体验设计工作内容<br>及基础知识",
+        plainTitle: "体验设计工作内容及基础知识",
+        teacher: "大老师",
+        audience: "UX、视觉（视觉选听）",
+        room: "749-755-003",
+        href: "https://meeting.tencent.com/dm/8sYgJW3WEBk2"
+      },
+      {
+        startsAt: "2026-07-03T14:30:00",
+        title: "体验设计细节<br>案例分析",
+        plainTitle: "体验设计细节案例分析",
+        teacher: "大老师",
+        audience: "UX、视觉（视觉选听）",
+        room: "944-795-339",
+        href: "https://meeting.tencent.com/dm/9joXdsqF5K8N"
+      },
+      {
+        startsAt: "2026-07-03T16:30:00",
+        title: "场景<br>案例分析",
+        plainTitle: "场景案例分析",
+        teacher: "大老师",
+        audience: "UX、视觉（视觉选听）",
+        room: "449-174-769",
+        href: "https://meeting.tencent.com/dm/sE6RjWAbjkw9"
+      },
+      {
+        startsAt: "2026-07-04T10:00:00",
+        title: "AI 在用户体验设计中<br>的应用",
+        plainTitle: "AI 在用户体验设计中的应用",
+        teacher: "年糕老师",
+        audience: "UX、视觉",
+        room: "948-328-051",
+        href: "https://meeting.tencent.com/dm/p0KKF3uzl77s"
+      },
+      {
+        startsAt: "2026-07-04T14:30:00",
+        title: "PS软件<br>基础课",
+        plainTitle: "PS软件基础课",
+        teacher: "张老师",
+        audience: "UX、视觉",
+        room: "262-941-454",
+        href: "https://meeting.tencent.com/dm/qP42XNPe9vBw"
+      }
+    ];
+
+    const weekNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const fullWeekNames = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    const termStartMonday = new Date(2026, 5, 29);
+
+    function startOfDay(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
+
+    function getMonday(date) {
+      const copy = startOfDay(date);
+      const day = copy.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      copy.setDate(copy.getDate() + diff);
+      return copy;
+    }
+
+    function formatDate(date) {
+      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+
+    function renderSmallCourse(course) {
+      const start = getCourseStart(course);
+      return `
+        <a class="small-course" href="${course.href}">
+          <div class="time">${formatTime(start)}</div>
+          <div><strong>${course.title}</strong><span>${course.teacher} · ${course.room}</span></div>
+          <div class="go">↗</div>
+        </a>
+      `;
+    }
+
+    function renderWeekRow(course) {
+      const status = getCourseStatus(course);
+      const statusMap = {
+        current: { label: "进入会议", className: "week-action week-action--current" },
+        future: { label: "加入会议列表", className: "week-action week-action--future" },
+        past: { label: "已结束", className: "week-action week-action--past" }
+      };
+      const action = statusMap[status];
+      const start = getCourseStart(course);
+
+      return `
+        <div class="week-row">
+          <div class="week-time">${weekNames[start.getDay()]}<br>${formatTime(start)}</div>
+          <div class="week-title"><strong>${course.plainTitle}</strong></div>
+          <div class="teacher">${course.teacher}</div>
+          <div class="audience">${course.audience}</div>
+          <div class="room">${course.room}</div>
+          <div class="week-action-wrap"><a class="${action.className}" href="${course.href}">${action.label}</a></div>
+        </div>
+      `;
+    }
+
+    function getCourseStart(course) {
+      return new Date(course.startsAt);
+    }
+
+    function formatTime(date) {
+      return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+    }
+
+    function isSameDay(left, right) {
+      return left.getFullYear() === right.getFullYear()
+        && left.getMonth() === right.getMonth()
+        && left.getDate() === right.getDate();
+    }
+
+    function getCourseStatus(course) {
+      const start = getCourseStart(course);
+      const end = new Date(start.getTime() + 120 * 60 * 1000);
+      if (now >= start && now < end) return "current";
+      if (now < start) return "future";
+      return "past";
+    }
+
     if (new URLSearchParams(location.search).has('export')) {
       document.documentElement.classList.add('export');
+    }
+
+    const now = new Date();
+    const currentMonday = getMonday(now);
+    const currentSunday = new Date(currentMonday);
+    currentSunday.setDate(currentSunday.getDate() + 6);
+    currentSunday.setHours(23, 59, 59, 999);
+    const diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
+    const weekNumber = Math.max(1, diffWeeks + 1);
+    const weekCourses = schedule
+      .filter((course) => {
+        const start = getCourseStart(course);
+        return start >= currentMonday && start <= currentSunday;
+      })
+      .sort((left, right) => getCourseStart(left) - getCourseStart(right));
+    const todayCourses = weekCourses.filter((course) => isSameDay(getCourseStart(course), now));
+    const upcomingCourses = weekCourses.filter((course) => getCourseStart(course) >= now);
+
+    document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
+    document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
+    document.getElementById("weeklyNote").textContent = `第 ${weekNumber} 周 · ${weekCourses.length} 节课程`;
+    document.getElementById("weekList").innerHTML = `
+      <div class="week-head">
+        <div>时间</div>
+        <div>课程</div>
+        <div>主讲老师</div>
+        <div>适合班型</div>
+        <div class="room">会议号</div>
+        <div>操作</div>
+      </div>
+      ${weekCourses.map(renderWeekRow).join("")}
+    `;
+
+    const todayNote = document.getElementById("todayNote");
+    const todayPrimaryTag = document.getElementById("todayPrimaryTag");
+    const todayPrimaryTitle = document.getElementById("todayPrimaryTitle");
+    const todayPrimaryMeta = document.getElementById("todayPrimaryMeta");
+    const todayPrimaryLink = document.getElementById("todayPrimaryLink");
+    const todaySecondaryList = document.getElementById("todaySecondaryList");
+
+    if (todayCourses.length > 0) {
+      const [primaryCourse, ...secondaryCourses] = todayCourses;
+      todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
+      todayPrimaryTag.textContent = `${formatTime(getCourseStart(primaryCourse))} 今日课程`;
+      todayPrimaryTitle.innerHTML = primaryCourse.title;
+      todayPrimaryMeta.innerHTML = `${primaryCourse.teacher} · ${primaryCourse.audience}<br>腾讯会议：${primaryCourse.room}`;
+      todayPrimaryLink.href = primaryCourse.href;
+      todayPrimaryLink.innerHTML = `进入会议 <span>→</span>`;
+      todaySecondaryList.innerHTML = secondaryCourses.map(renderSmallCourse).join("");
+    } else if (upcomingCourses.length > 0) {
+      const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
+      const nextStart = getCourseStart(nextCourse);
+      todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
+      todayPrimaryTag.textContent = `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)} 即将开始`;
+      todayPrimaryTitle.innerHTML = nextCourse.title;
+      todayPrimaryMeta.innerHTML = `${nextCourse.teacher} · ${nextCourse.audience}<br>腾讯会议：${nextCourse.room}`;
+      todayPrimaryLink.href = nextCourse.href;
+      todayPrimaryLink.innerHTML = `进入会议 <span>→</span>`;
+      todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
+    } else {
+      todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
+      todayPrimaryTag.textContent = "今日暂无直播";
+      todayPrimaryTitle.innerHTML = "本周课程集中在周一";
+      todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
+      todayPrimaryLink.href = "#weekly-schedule";
+      todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
+      todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
     }
   </script>
 </body>
