@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>奇点同行 · 学习站 V2 视觉稿</title>
+  <style>
+    :root {
+      --ink: #142650;
+      --muted: #66769a;
+      --blue: #3159d9;
+      --blue-deep: #162755;
+      --line: rgba(43, 78, 145, .13);
+      --paper: rgba(252, 254, 255, .94);
+      --yellow: #ffc95b;
+      --mint: #c6ead8;
+      --orange: #ff8956;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 750px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 82% 8%, rgba(255, 217, 117, .36), transparent 23%),
+        radial-gradient(circle at 12% 44%, rgba(149, 211, 255, .44), transparent 30%),
+        linear-gradient(145deg, #edf8ff 0%, #dceeff 52%, #e6f4ff 100%);
+      font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background:
+        linear-gradient(rgba(42,87,164,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42,87,164,.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: linear-gradient(to bottom, #000, transparent 84%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1380px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    header {
+      height: 54px;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 19px;
+      font-weight: 760;
+      letter-spacing: -.04em;
+    }
+
+    .brand span { color: #6c7b9c; font-weight: 520; }
+
+    .mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 4px 5px 0 var(--ink);
+      transform: rotate(-4deg);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 22px 8px;
+    }
+
+    .hero::after {
+      content: "✦";
+      position: absolute;
+      right: 230px;
+      top: 26px;
+      color: var(--blue);
+      font-size: 44px;
+      transform: rotate(12deg);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 16px;
+      color: #496aa5;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 20px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--orange);
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(37px, 3.4vw, 52px);
+      line-height: 1.22;
+      letter-spacing: -.05em;
+    }
+
+    h1 mark {
+      color: inherit;
+      background: linear-gradient(transparent 70%, rgba(255, 201, 91, .78) 0);
+    }
+
+    .date {
+      min-width: 190px;
+      text-align: right;
+    }
+
+    .date strong {
+      display: block;
+      font-size: 32px;
+      letter-spacing: -.06em;
+    }
+
+    .date span { color: var(--muted); font-size: 13px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.72fr) minmax(350px, .72fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .left { display: flex; flex-direction: column; gap: 20px; }
+
+    .panel {
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 26px;
+      background: var(--paper);
+      box-shadow: 0 20px 50px rgba(49, 89, 150, .10);
+    }
+
+    .panel-inner { padding: 26px 28px 28px; }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 19px;
+    }
+
+    h2 { margin: 0; font-size: 22px; letter-spacing: -.045em; }
+    .note { color: var(--muted); font-size: 13px; }
+
+    .today-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.14fr) minmax(270px, .86fr);
+      gap: 14px;
+    }
+
+    .primary-course {
+      position: relative;
+      min-height: 258px;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      overflow: hidden;
+      border-radius: 20px;
+      color: #f8fbff;
+      background: var(--blue-deep);
+    }
+
+    .primary-course::after {
+      content: "01";
+      position: absolute;
+      right: -5px;
+      bottom: -35px;
+      color: rgba(255,255,255,.055);
+      font-family: Georgia, serif;
+      font-size: 148px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .tag {
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--yellow);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .course-title {
+      margin: 18px 0 8px;
+      font-family: "Songti SC", serif;
+      font-size: 27px;
+      line-height: 1.28;
+      letter-spacing: -.035em;
+    }
+
+    .primary-course .meta {
+      color: rgba(248,251,255,.67);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .join {
+      width: fit-content;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: auto;
+      padding: 10px 14px;
+      border-radius: 11px;
+      color: var(--ink);
+      background: #f8fbff;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .small-courses { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
+
+    .small-course {
+      position: relative;
+      display: grid;
+      grid-template-columns: 58px 1fr 28px;
+      align-items: center;
+      gap: 13px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #f8fbff;
+    }
+
+    .small-course:nth-child(2) { background: #edf6ff; }
+
+    .time {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .small-course strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .small-course span { color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .go { color: var(--blue); font-size: 21px; }
+
+    .weekly { padding: 25px 28px 18px; }
+
+    .week-list { display: flex; flex-direction: column; }
+
+    .week-row {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1.2fr) 136px 100px 112px;
+      align-items: center;
+      gap: 14px;
+      min-height: 76px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .week-row:first-child { border-top: 0; }
+    .week-time { font-family: Georgia, serif; font-size: 17px; font-weight: 700; }
+    .week-title strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .week-title span, .teacher, .room { color: var(--muted); font-size: 12px; }
+
+    .audience {
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #315f50;
+      background: var(--mint);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .room { font-family: Georgia, serif; }
+
+    .shortcut { padding: 26px 26px 22px; }
+    .shortcut .section-head { margin-bottom: 15px; }
+
+    .shortcut-list { display: flex; flex-direction: column; }
+
+    .shortcut-item {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 83px;
+      border-top: 1px solid var(--line);
+    }
+
+    .shortcut-item:first-child { border-top: 0; }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: #edf1ff;
+    }
+
+    .shortcut-item:nth-child(2) .icon { color: #c95d2d; background: #fff0e5; }
+    .shortcut-item:nth-child(3) .icon { color: #277251; background: #e8f6ee; }
+    .shortcut-item:nth-child(4) .icon { color: #744aa3; background: #f4ecff; }
+    .shortcut-item strong { display: block; margin-bottom: 4px; font-size: 15px; }
+    .shortcut-item span { color: var(--muted); font-size: 12px; }
+    .shortcut-item b { color: #8794ae; font-size: 19px; font-weight: 500; }
+
+    .tip {
+      position: relative;
+      min-height: 168px;
+      margin-top: 20px;
+      padding: 23px 24px;
+      overflow: hidden;
+      border-radius: 23px;
+      color: var(--ink);
+      background: rgba(255, 201, 91, .74);
+    }
+
+    .tip::after {
+      content: "✦";
+      position: absolute;
+      right: 15px;
+      bottom: -17px;
+      color: rgba(20,38,80,.16);
+      font-size: 96px;
+    }
+
+    .tip-kicker { font-size: 12px; font-weight: 760; letter-spacing: .08em; }
+    .tip p { max-width: 260px; margin: 16px 0 0; font-family: "Songti SC", serif; font-size: 21px; line-height: 1.45; font-weight: 700; }
+
+    @media (max-width: 1080px) {
+      .page { width: calc(100% - 36px); }
+      .hero { padding-right: 18px; }
+      .hero::after { display: none; }
+      .layout { grid-template-columns: 1fr; }
+      .right { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
+      .tip { margin-top: 0; min-height: 100%; }
+    }
+
+    @media (max-width: 820px) {
+      .hero { align-items: flex-start; flex-direction: column; gap: 20px; }
+      .date { text-align: left; }
+      .today-grid { grid-template-columns: 1.12fr .88fr; }
+      .week-row { grid-template-columns: 68px 1fr 104px 84px; }
+      .week-row .room { display: none; }
+      .right { grid-template-columns: 1fr; }
+      .panel-inner, .weekly { padding-inline: 22px; }
+    }
+
+    /* Export-only mode compensates for high-DPI screenshot scaling. */
+    html.export .page {
+      width: 1376px;
+      margin-left: 64px;
+      margin-right: 0;
+      zoom: .5;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6.5h16M4 12h10M4 17.5h13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="12" r="2" fill="#ffc95b"/></svg>
+        </div>
+        奇点同行 <span>· 学习站</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">今天也在向前一点点</p>
+        <h1>把今天这一步走稳，<mark>答案会在路上出现。</mark></h1>
+      </div>
+      <div class="date">
+        <strong>星期一</strong>
+        <span>2026年7月6日 · 第27周</span>
+      </div>
+    </section>
+
+    <div class="layout">
+      <div class="left">
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="section-head">
+              <h2>今日课程</h2>
+              <div class="note">3 节课程 · 开学第一天</div>
+            </div>
+            <div class="today-grid">
+              <article class="primary-course">
+                <div class="tag">10:00 即将开始</div>
+                <h3 class="course-title">校区开课迎新<br>& 破冰小会</h3>
+                <div class="meta">校区主教老师 · UX、视觉<br>腾讯会议：899-192-267</div>
+                <a class="join" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">进入会议 <span>→</span></a>
+              </article>
+              <div class="small-courses">
+                <a class="small-course" href="https://meeting.tencent.com/dm/10FD66noRLym">
+                  <div class="time">14:00</div>
+                  <div><strong>开学第一课<br>先导课</strong><span>大老师 · 689-284-078</span></div>
+                  <div class="go">↗</div>
+                </a>
+                <a class="small-course" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0">
+                  <div class="time">19:30</div>
+                  <div><strong>书籍及资料<br>阅读方法</strong><span>麻雀老师 · 407-351-735</span></div>
+                  <div class="go">↗</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel weekly">
+          <div class="section-head">
+            <h2>本周课程</h2>
+            <div class="note">第 27 周 · 3 节课程</div>
+          </div>
+          <div class="week-list">
+            <a class="week-row" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">
+              <div class="week-time">周一<br>10:00</div>
+              <div class="week-title"><strong>校区开课迎新 & 破冰小会</strong><span>腾讯会议 · 点击进入</span></div>
+              <div class="teacher">校区主教老师</div>
+              <div class="audience">UX、视觉</div>
+              <div class="room">899-192-267</div>
+            </a>
+            <a class="week-row" href="https://meeting.tencent.com/dm/10FD66noRLym">
+              <div class="week-time">周一<br>14:00</div>
+              <div class="week-title"><strong>开学第一课 · 先导课</strong><span>腾讯会议 · 点击进入</span></div>
+              <div class="teacher">大老师</div>
+              <div class="audience">UX、视觉</div>
+              <div class="room">689-284-078</div>
+            </a>
+            <a class="week-row" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0">
+              <div class="week-time">周一<br>19:30</div>
+              <div class="week-title"><strong>书籍及资料阅读方法</strong><span>腾讯会议 · 点击进入</span></div>
+              <div class="teacher">麻雀老师</div>
+              <div class="audience">UX、视觉</div>
+              <div class="room">407-351-735</div>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right">
+        <section class="panel shortcut">
+          <div class="section-head">
+            <h2>快捷入口</h2>
+            <div class="note">常用服务</div>
+          </div>
+          <div class="shortcut-list">
+            <a class="shortcut-item" href="#">
+              <div class="icon">▤</div>
+              <div><strong>提交作业</strong><span>上传作业与修改稿</span></div><b>→</b>
+            </a>
+            <a class="shortcut-item" href="#">
+              <div class="icon">✓</div>
+              <div><strong>请假申请</strong><span>填写请假时间与原因</span></div><b>→</b>
+            </a>
+            <a class="shortcut-item" href="#">
+              <div class="icon">▥</div>
+              <div><strong>学习资料库</strong><span>课件、模板与工具合集</span></div><b>→</b>
+            </a>
+            <a class="shortcut-item" href="#">
+              <div class="icon">↥</div>
+              <div><strong>课程回放</strong><span>按日期查找直播录像</span></div><b>→</b>
+            </a>
+          </div>
+        </section>
+
+        <section class="tip">
+          <div class="tip-kicker">TODAY'S NOTE · 今日提醒</div>
+          <p>先认识彼此，<br>再一起把这段学习旅程走好。</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script>
+    if (new URLSearchParams(location.search).has('export')) {
+      document.documentElement.classList.add('export');
+    }
+  </script>
+</body>
+</html>
