@@ -499,7 +499,7 @@
         <section class="panel">
           <div class="panel-inner">
             <div class="section-head">
-              <h2>今日课程</h2>
+              <h2 id="todaySectionTitle">今日课程</h2>
               <div class="note" id="todayNote">3 节课程 · 第1周</div>
             </div>
             <div class="today-grid">
@@ -719,6 +719,23 @@
       return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
     }
 
+    function getCourseSectionTitle(targetDate) {
+      const today = startOfDay(now);
+      const courseDay = startOfDay(targetDate);
+      const diffDays = Math.round((courseDay - today) / (24 * 60 * 60 * 1000));
+      const currentWeekStart = getMonday(today);
+      const targetWeekStart = getMonday(courseDay);
+      const diffWeeks = Math.round((targetWeekStart - currentWeekStart) / (7 * 24 * 60 * 60 * 1000));
+
+      if (diffDays <= 0) return "今日课程";
+      if (diffDays === 1) return "明日课程";
+      if (diffDays === 2) return "后天课程";
+      if (today.getDay() === 6 && diffWeeks >= 1) return "下周课程";
+      if (diffWeeks === 0) return `${weekNames[targetDate.getDay()]}课程`;
+      if (diffWeeks === 1) return `下${weekNames[targetDate.getDay()]}课程`;
+      return `${weekNames[targetDate.getDay()]}课程`;
+    }
+
     function renderSmallCourse(course) {
       const start = getCourseStart(course);
       const status = getCourseStatus(course);
@@ -798,14 +815,15 @@
     currentSunday.setHours(23, 59, 59, 999);
     const diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
     const weekNumber = Math.max(1, diffWeeks + 1);
-    const weekCourses = schedule
+    const sortedCourses = [...schedule].sort((left, right) => getCourseStart(left) - getCourseStart(right));
+    const weekCourses = sortedCourses
       .filter((course) => {
         const start = getCourseStart(course);
         return start >= currentMonday && start <= currentSunday;
       })
       .sort((left, right) => getCourseStart(left) - getCourseStart(right));
     const todayCourses = weekCourses.filter((course) => isSameDay(getCourseStart(course), now));
-    const upcomingCourses = weekCourses.filter((course) => getCourseStart(course) >= now);
+    const upcomingCourses = sortedCourses.filter((course) => getCourseStart(course) >= now);
 
     document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
     document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
@@ -823,6 +841,7 @@
     `;
 
     const todayNote = document.getElementById("todayNote");
+    const todaySectionTitle = document.getElementById("todaySectionTitle");
     const todayPrimaryTag = document.getElementById("todayPrimaryTag");
     const todayPrimaryTitle = document.getElementById("todayPrimaryTitle");
     const todayPrimaryMeta = document.getElementById("todayPrimaryMeta");
@@ -831,6 +850,7 @@
 
     if (todayCourses.length > 0) {
       const [primaryCourse, ...secondaryCourses] = todayCourses;
+      todaySectionTitle.textContent = "今日课程";
       todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
       todayPrimaryTag.textContent = `${formatTime(getCourseStart(primaryCourse))} 今日课程`;
       todayPrimaryTitle.innerHTML = primaryCourse.title;
@@ -841,6 +861,7 @@
     } else if (upcomingCourses.length > 0) {
       const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
       const nextStart = getCourseStart(nextCourse);
+      todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
       todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
       todayPrimaryTag.textContent = `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)} 即将开始`;
       todayPrimaryTitle.innerHTML = nextCourse.title;
@@ -849,9 +870,10 @@
       todayPrimaryLink.innerHTML = `进入会议 <span>→</span>`;
       todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
     } else {
+      todaySectionTitle.textContent = "近期课程";
       todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
       todayPrimaryTag.textContent = "今日暂无直播";
-      todayPrimaryTitle.innerHTML = "本周课程集中在周一";
+      todayPrimaryTitle.innerHTML = "近期暂无已排课程";
       todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
       todayPrimaryLink.href = "#weekly-schedule";
       todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
