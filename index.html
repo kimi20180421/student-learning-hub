@@ -253,9 +253,9 @@
     .small-course {
       position: relative;
       display: grid;
-      grid-template-columns: 58px 1fr 28px;
-      align-items: center;
-      gap: 13px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 14px;
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -265,20 +265,48 @@
     .small-course:nth-child(2) { background: #edf6ff; }
 
     .time {
+      display: block;
+      margin-bottom: 8px;
       font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
       font-size: 18px;
       font-weight: 700;
+      line-height: 1.2;
     }
 
     .small-course strong {
       display: block;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
       font-size: 15px;
       line-height: 1.45;
     }
 
-    .small-course span { color: var(--muted); font-size: 12px; line-height: 1.6; }
-    .go { color: var(--blue); font-size: 21px; }
+    .small-course-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .small-course-meta {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .small-course-meta-inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .small-course-action {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      justify-content: flex-end;
+      min-height: 100%;
+    }
 
     .weekly { padding: 25px 28px 18px; }
 
@@ -572,8 +600,8 @@
     const schedule = [
       {
         startsAt: "2026-07-01T10:00:00",
-        title: "校区开课迎新<br>& 破冰小会",
-        plainTitle: "校区开课迎新&破冰小会",
+        title: "欢迎来到暑假集训-北京站",
+        plainTitle: "欢迎来到暑假集训-北京站",
         teacher: "校区主教老师",
         audience: "UX、视觉",
         room: "899-192-267",
@@ -693,23 +721,27 @@
 
     function renderSmallCourse(course) {
       const start = getCourseStart(course);
+      const status = getCourseStatus(course);
+      const action = getCourseAction(status);
       return `
-        <a class="small-course" href="${course.href}">
-          <div class="time">${formatTime(start)}</div>
-          <div><strong>${course.title}</strong><span>${course.teacher} · ${course.room}</span></div>
-          <div class="go">↗</div>
-        </a>
+        <div class="small-course">
+          <div class="small-course-info">
+            <span class="time">${formatTime(start)}</span>
+            <strong>${course.plainTitle}</strong>
+            <div class="small-course-meta small-course-meta-inline">
+              <span>${course.teacher}</span>
+              <span>${course.audience}</span>
+            </div>
+            <div class="small-course-meta">会议号 ${course.room}</div>
+          </div>
+          <div class="small-course-action"><a class="${action.className}" href="${course.href}">${action.label}</a></div>
+        </div>
       `;
     }
 
     function renderWeekRow(course) {
       const status = getCourseStatus(course);
-      const statusMap = {
-        current: { label: "进入会议", className: "week-action week-action--current" },
-        future: { label: "加入会议列表", className: "week-action week-action--future" },
-        past: { label: "已结束", className: "week-action week-action--past" }
-      };
-      const action = statusMap[status];
+      const action = getCourseAction(status);
       const start = getCourseStart(course);
 
       return `
@@ -744,6 +776,15 @@
       if (now >= start && now < end) return "current";
       if (now < start) return "future";
       return "past";
+    }
+
+    function getCourseAction(status) {
+      const statusMap = {
+        current: { label: "进入会议", className: "week-action week-action--current" },
+        future: { label: "加入会议列表", className: "week-action week-action--future" },
+        past: { label: "已结束", className: "week-action week-action--past" }
+      };
+      return statusMap[status];
     }
 
     if (new URLSearchParams(location.search).has('export')) {
