@@ -507,15 +507,15 @@
                 <div class="tag" id="todayPrimaryTag">10:00 即将开始</div>
                 <h3 class="course-title" id="todayPrimaryTitle">校区开课迎新<br>& 破冰小会</h3>
                 <div class="meta" id="todayPrimaryMeta">校区主教老师 · UX、视觉<br>腾讯会议：899-192-267</div>
-                <a class="join" id="todayPrimaryLink" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">进入会议 <span>→</span></a>
+                <a class="join" id="todayPrimaryLink" href="https://meeting.tencent.com/dm/GfidG3aIk2eO" target="_blank" rel="noreferrer">进入会议 <span>→</span></a>
               </article>
               <div class="small-courses" id="todaySecondaryList">
-                <a class="small-course" href="https://meeting.tencent.com/dm/10FD66noRLym">
+                <a class="small-course" href="https://meeting.tencent.com/dm/10FD66noRLym" target="_blank" rel="noreferrer">
                   <div class="time">14:00</div>
                   <div><strong>开学第一课<br>先导课</strong><span>大老师 · 689-284-078</span></div>
                   <div class="go">↗</div>
                 </a>
-                <a class="small-course" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0">
+                <a class="small-course" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0" target="_blank" rel="noreferrer">
                   <div class="time">19:30</div>
                   <div><strong>书籍及资料<br>阅读方法</strong><span>麻雀老师 · 407-351-735</span></div>
                   <div class="go">↗</div>
@@ -539,21 +539,21 @@
               <div class="room">会议号</div>
               <div>操作</div>
             </div>
-            <a class="week-row" href="https://meeting.tencent.com/dm/GfidG3aIk2eO">
+            <a class="week-row" href="https://meeting.tencent.com/dm/GfidG3aIk2eO" target="_blank" rel="noreferrer">
               <div class="week-time">周一<br>10:00</div>
               <div class="week-title"><strong>校区开课迎新 & 破冰小会</strong><span>腾讯会议 · 点击进入</span></div>
               <div class="teacher">校区主教老师</div>
               <div class="audience">UX、视觉</div>
               <div class="room">899-192-267</div>
             </a>
-            <a class="week-row" href="https://meeting.tencent.com/dm/10FD66noRLym">
+            <a class="week-row" href="https://meeting.tencent.com/dm/10FD66noRLym" target="_blank" rel="noreferrer">
               <div class="week-time">周一<br>14:00</div>
               <div class="week-title"><strong>开学第一课 · 先导课</strong><span>腾讯会议 · 点击进入</span></div>
               <div class="teacher">大老师</div>
               <div class="audience">UX、视觉</div>
               <div class="room">689-284-078</div>
             </a>
-            <a class="week-row" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0">
+            <a class="week-row" href="https://meeting.tencent.com/dm/GA9ogFwV8rS0" target="_blank" rel="noreferrer">
               <div class="week-time">周一<br>19:30</div>
               <div class="week-title"><strong>书籍及资料阅读方法</strong><span>腾讯会议 · 点击进入</span></div>
               <div class="teacher">麻雀老师</div>
@@ -578,11 +578,11 @@
               <div class="icon">✓</div>
               <div><strong>请假申请</strong><span>填写请假时间与原因</span></div><b>→</b>
             </a>
-            <a class="shortcut-item" href="#">
+            <a class="shortcut-item" href="#" target="_blank" rel="noreferrer">
               <div class="icon">▥</div>
               <div><strong>学习资料库</strong><span>课件、模板与工具合集</span></div><b>→</b>
             </a>
-            <a class="shortcut-item" href="#">
+            <a class="shortcut-item" href="#" target="_blank" rel="noreferrer">
               <div class="icon">↥</div>
               <div><strong>课程回放</strong><span>按日期查找直播录像</span></div><b>→</b>
             </a>
@@ -751,7 +751,7 @@
             </div>
             <div class="small-course-meta">会议号 ${course.room}</div>
           </div>
-          <div class="small-course-action"><a class="${action.className}" href="${course.href}">${action.label}</a></div>
+          <div class="small-course-action"><a class="${action.className}" href="${course.href}" target="_blank" rel="noreferrer">${action.label}</a></div>
         </div>
       `;
     }
@@ -768,9 +768,16 @@
           <div class="teacher">${course.teacher}</div>
           <div class="audience">${course.audience}</div>
           <div class="room">${course.room}</div>
-          <div class="week-action-wrap"><a class="${action.className}" href="${course.href}">${action.label}</a></div>
+          <div class="week-action-wrap"><a class="${action.className}" href="${course.href}" target="_blank" rel="noreferrer">${action.label}</a></div>
         </div>
       `;
+    }
+
+    function enforceNewTabLinks() {
+      document.querySelectorAll('a[href]').forEach((link) => {
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      });
     }
 
     function getCourseStart(course) {
@@ -879,6 +886,8 @@
       todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
       todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
     }
+
+    enforceNewTabLinks();
   </script>
 </body>
 </html>
