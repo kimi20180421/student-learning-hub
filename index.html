@@ -304,6 +304,23 @@
       line-height: 1.45;
     }
 
+    .course-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      margin-left: 4px;
+      padding: 0 8px;
+      border-radius: 4px;
+      color: #1d8f5b;
+      background: rgba(60, 190, 120, .14);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
     .small-course-info {
       min-width: 0;
       display: flex;
@@ -716,6 +733,7 @@
         startsAt: "2026-07-02T14:30:00",
         title: "设计师<br>能力模型",
         plainTitle: "设计师能力模型",
+        isNew: true,
         teacher: "冯老师",
         audience: "UX、视觉",
         room: "520-394-503",
@@ -725,6 +743,7 @@
         startsAt: "2026-07-02T16:30:00",
         title: "给新人的<br>AI通识课",
         plainTitle: "给新人的AI通识课",
+        isNew: true,
         teacher: "三牛老师",
         audience: "UX、视觉",
         room: "538-917-643",
@@ -814,6 +833,10 @@
       return `${weekNames[targetDate.getDay()]}课程`;
     }
 
+    function renderCourseBadge(course) {
+      return course.isNew ? '<span class="course-badge">新增</span>' : "";
+    }
+
     function renderSmallCourse(course) {
       const start = getCourseStart(course);
       const status = getCourseStatus(course);
@@ -823,7 +846,7 @@
         <div class="${cardClassName}">
           <div class="small-course-info">
             <span class="time">${formatTime(start)}</span>
-            <strong>${course.plainTitle}</strong>
+            <strong>${course.plainTitle}${renderCourseBadge(course)}</strong>
             <div class="small-course-meta small-course-meta-inline">
               <span>${course.teacher}</span>
               <span>${course.audience}</span>
@@ -844,7 +867,7 @@
       return `
         <div class="${rowClassName}">
           <div class="week-time">${weekNames[start.getDay()]}<br>${formatTime(start)}</div>
-          <div class="week-title"><strong>${course.plainTitle}</strong></div>
+          <div class="week-title"><strong>${course.plainTitle}${renderCourseBadge(course)}</strong></div>
           <div class="teacher">${course.teacher}</div>
           <div class="audience">${course.audience}</div>
           <div class="room">${course.room}</div>
@@ -904,7 +927,7 @@
       const action = getCourseAction(status);
       todayPrimary.className = status === "past" ? "primary-course primary-course--past" : "primary-course";
       todayPrimaryTag.textContent = tagText;
-      todayPrimaryTitle.innerHTML = course.title;
+      todayPrimaryTitle.innerHTML = `${course.title}${renderCourseBadge(course)}`;
       todayPrimaryMeta.innerHTML = `${course.teacher} · ${course.audience}<br>腾讯会议：${course.room}`;
       todayPrimaryLink.href = course.href;
       todayPrimaryLink.className = status === "past" ? "join join--past" : "join";
@@ -915,48 +938,8 @@
       document.documentElement.classList.add('export');
     }
 
-    const now = new Date();
-    const currentMonday = getMonday(now);
-    const currentSunday = new Date(currentMonday);
-    currentSunday.setDate(currentSunday.getDate() + 6);
-    currentSunday.setHours(23, 59, 59, 999);
-    const diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
-    const weekNumber = Math.max(1, diffWeeks + 1);
     const sortedCourses = [...schedule].sort((left, right) => getCourseStart(left) - getCourseStart(right));
-    const weekCourses = sortedCourses
-      .filter((course) => {
-        const start = getCourseStart(course);
-        return start >= currentMonday && start <= currentSunday;
-      })
-      .sort((left, right) => getCourseStart(left) - getCourseStart(right));
-    const orderedWeekCourses = [...weekCourses].sort((left, right) => {
-      const leftStatus = getCourseStatus(left);
-      const rightStatus = getCourseStatus(right);
-      if (leftStatus === rightStatus) return getCourseStart(left) - getCourseStart(right);
-      if (leftStatus === "past") return 1;
-      if (rightStatus === "past") return -1;
-      return getCourseStart(left) - getCourseStart(right);
-    });
-    const todayCourses = weekCourses
-      .filter((course) => isSameDay(getCourseStart(course), now))
-      .sort(compareCourseByStatus);
-    const upcomingCourses = sortedCourses.filter((course) => getCourseStart(course) >= now);
-
-    document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
-    document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
-    document.getElementById("weeklyNote").textContent = `第 ${weekNumber} 周 · ${weekCourses.length} 节课程`;
-    document.getElementById("weekList").innerHTML = `
-      <div class="week-head">
-        <div>时间</div>
-        <div>课程</div>
-        <div>主讲老师</div>
-        <div>适合班型</div>
-        <div class="room">会议号</div>
-        <div>操作</div>
-      </div>
-      ${orderedWeekCourses.map(renderWeekRow).join("")}
-    `;
-
+    let now = new Date();
     const todayNote = document.getElementById("todayNote");
     const todaySectionTitle = document.getElementById("todaySectionTitle");
     const todayPrimary = document.getElementById("todayPrimary");
@@ -966,33 +949,83 @@
     const todayPrimaryLink = document.getElementById("todayPrimaryLink");
     const todaySecondaryList = document.getElementById("todaySecondaryList");
 
-    if (todayCourses.length > 0) {
-      const [primaryCourse, ...secondaryCourses] = todayCourses;
-      todaySectionTitle.textContent = "今日课程";
-      todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
-      setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
-      todaySecondaryList.innerHTML = secondaryCourses.map(renderSmallCourse).join("");
-    } else if (upcomingCourses.length > 0) {
-      const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
-      const nextStart = getCourseStart(nextCourse);
-      todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
-      todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
-      setPrimaryCourse(nextCourse, `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)}`);
-      todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
-    } else {
-      todayPrimary.className = "primary-course";
-      todaySectionTitle.textContent = "近期课程";
-      todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
-      todayPrimaryTag.textContent = "今日暂无直播";
-      todayPrimaryTitle.innerHTML = "近期暂无已排课程";
-      todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
-      todayPrimaryLink.href = "#weekly-schedule";
-      todayPrimaryLink.className = "join";
-      todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
-      todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
+    function renderSchedule() {
+      now = new Date();
+      const currentMonday = getMonday(now);
+      const currentSunday = new Date(currentMonday);
+      currentSunday.setDate(currentSunday.getDate() + 6);
+      currentSunday.setHours(23, 59, 59, 999);
+      const diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
+      const weekNumber = Math.max(1, diffWeeks + 1);
+      const weekCourses = sortedCourses
+        .filter((course) => {
+          const start = getCourseStart(course);
+          return start >= currentMonday && start <= currentSunday;
+        })
+        .sort((left, right) => getCourseStart(left) - getCourseStart(right));
+      const orderedWeekCourses = [...weekCourses].sort((left, right) => {
+        const leftStatus = getCourseStatus(left);
+        const rightStatus = getCourseStatus(right);
+        if (leftStatus === rightStatus) return getCourseStart(left) - getCourseStart(right);
+        if (leftStatus === "past") return 1;
+        if (rightStatus === "past") return -1;
+        return getCourseStart(left) - getCourseStart(right);
+      });
+      const todayCourses = weekCourses
+        .filter((course) => isSameDay(getCourseStart(course), now))
+        .sort(compareCourseByStatus);
+      const upcomingCourses = sortedCourses.filter((course) => getCourseStart(course) >= now);
+
+      document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
+      document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
+      document.getElementById("weeklyNote").textContent = `第 ${weekNumber} 周 · ${weekCourses.length} 节课程`;
+      document.getElementById("weekList").innerHTML = `
+        <div class="week-head">
+          <div>时间</div>
+          <div>课程</div>
+          <div>主讲老师</div>
+          <div>适合班型</div>
+          <div class="room">会议号</div>
+          <div>操作</div>
+        </div>
+        ${orderedWeekCourses.map(renderWeekRow).join("")}
+      `;
+
+      if (todayCourses.length > 0) {
+        const [primaryCourse, ...secondaryCourses] = todayCourses;
+        todaySectionTitle.textContent = "今日课程";
+        todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
+        setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
+        todaySecondaryList.innerHTML = secondaryCourses.map(renderSmallCourse).join("");
+      } else if (upcomingCourses.length > 0) {
+        const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
+        const nextStart = getCourseStart(nextCourse);
+        todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
+        todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
+        setPrimaryCourse(nextCourse, `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)}`);
+        todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
+      } else {
+        todayPrimary.className = "primary-course";
+        todaySectionTitle.textContent = "近期课程";
+        todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
+        todayPrimaryTag.textContent = "今日暂无直播";
+        todayPrimaryTitle.innerHTML = "近期暂无已排课程";
+        todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
+        todayPrimaryLink.href = "#weekly-schedule";
+        todayPrimaryLink.className = "join";
+        todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
+        todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
+      }
     }
 
+    renderSchedule();
     enforceNewTabLinks();
+
+    const nextMinuteDelay = (60 - new Date().getSeconds()) * 1000 - new Date().getMilliseconds();
+    setTimeout(() => {
+      renderSchedule();
+      setInterval(renderSchedule, 60 * 1000);
+    }, Math.max(0, nextMinuteDelay));
   </script>
 </body>
 </html>
