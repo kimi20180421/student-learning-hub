@@ -212,16 +212,18 @@
 
     .tag {
       width: fit-content;
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: var(--ink);
-      background: var(--yellow);
-      font-size: 12px;
-      font-weight: 760;
+      margin-bottom: 10px;
+      padding: 0;
+      color: rgba(248,251,255,.82);
+      background: transparent;
+      font-family: "PingFang SC", "Hiragino Sans GB", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
     .course-title {
-      margin: 18px 0 8px;
+      margin: 0 0 8px;
       font-family: "Songti SC", serif;
       font-size: 27px;
       line-height: 1.28;
@@ -241,11 +243,29 @@
       align-items: center;
       margin-top: auto;
       padding: 10px 14px;
-      border-radius: 11px;
+      border-radius: 999px;
       color: var(--ink);
-      background: #f8fbff;
+      background: var(--yellow);
       font-size: 13px;
       font-weight: 760;
+    }
+
+    .primary-course--past {
+      color: #96a3bb;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .primary-course--past::after { color: rgba(20,38,80,.06); }
+    .primary-course--past .tag,
+    .primary-course--past .course-title,
+    .primary-course--past .meta { color: #96a3bb; }
+
+    .join--past {
+      color: #96a3bb;
+      background: transparent;
+      border: 1px solid transparent;
+      padding-inline: 0;
     }
 
     .small-courses { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
@@ -263,6 +283,10 @@
     }
 
     .small-course:nth-child(2) { background: #edf6ff; }
+    .small-course.small-course--past { background: #fff; }
+    .small-course.small-course--past .time,
+    .small-course.small-course--past strong,
+    .small-course.small-course--past .small-course-meta { color: #96a3bb; }
 
     .time {
       display: block;
@@ -341,13 +365,15 @@
       font-weight: 700;
     }
     .week-title strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .week-row--past .week-time,
+    .week-row--past .week-title strong { color: #9aa5ba; }
     .teacher, .audience, .room { color: var(--muted); font-size: 12px; }
 
     .room { font-family: "PingFang SC", "Hiragino Sans GB", sans-serif; }
 
     .week-action-wrap {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
     }
 
     .week-action {
@@ -394,6 +420,7 @@
     .shortcut-list { display: flex; flex-direction: column; }
 
     .shortcut-item {
+      position: relative;
       width: 100%;
       display: grid;
       grid-template-columns: 48px 1fr auto;
@@ -401,6 +428,51 @@
       gap: 14px;
       min-height: 83px;
       border-top: 1px solid var(--line);
+    }
+
+    .shortcut-item--popover::after {
+      content: attr(data-popover);
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      transform: translate(-50%, -100%);
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: #f8fbff;
+      background: rgba(20, 38, 80, .94);
+      font-size: 12px;
+      line-height: 1.4;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease;
+      box-shadow: 0 12px 28px rgba(20, 38, 80, .18);
+    }
+
+    .shortcut-item--popover::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(20, 38, 80, .94);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease;
+    }
+
+    .shortcut-item--popover:hover::after,
+    .shortcut-item--popover:hover::before {
+      opacity: 1;
+    }
+
+    .shortcut-item--popover:hover::after {
+      transform: translate(-50%, calc(-100% - 4px));
+    }
+
+    .shortcut-item--popover:hover::before {
+      transform: translateX(-50%);
     }
 
     .shortcut-item:first-child { border-top: 0; }
@@ -421,6 +493,7 @@
     .shortcut-item strong { display: block; margin-bottom: 4px; font-size: 15px; }
     .shortcut-item span { color: var(--muted); font-size: 12px; }
     .shortcut-item b { color: #8794ae; font-size: 19px; font-weight: 500; }
+    .shortcut-item--popover b { display: none; }
 
     .tip {
       position: relative;
@@ -583,7 +656,7 @@
               <div class="icon">▥</div>
               <div><strong>学习资料库</strong><span>课件、模板与工具合集</span></div><b>→</b>
             </a>
-            <a class="shortcut-item" href="#" target="_blank" rel="noreferrer">
+            <a class="shortcut-item shortcut-item--popover" href="#" target="_blank" rel="noreferrer" data-popover="可前往小鹅通观看">
               <div class="icon">↥</div>
               <div><strong>课程回放</strong><span>已直播课程将在48小时内发布到小鹅通</span></div><b>→</b>
             </a>
@@ -745,8 +818,9 @@
       const start = getCourseStart(course);
       const status = getCourseStatus(course);
       const action = getCourseAction(status);
+      const cardClassName = status === "past" ? "small-course small-course--past" : "small-course";
       return `
-        <div class="small-course">
+        <div class="${cardClassName}">
           <div class="small-course-info">
             <span class="time">${formatTime(start)}</span>
             <strong>${course.plainTitle}</strong>
@@ -765,9 +839,10 @@
       const status = getCourseStatus(course);
       const action = getCourseAction(status);
       const start = getCourseStart(course);
+      const rowClassName = status === "past" ? "week-row week-row--past" : "week-row";
 
       return `
-        <div class="week-row">
+        <div class="${rowClassName}">
           <div class="week-time">${weekNames[start.getDay()]}<br>${formatTime(start)}</div>
           <div class="week-title"><strong>${course.plainTitle}</strong></div>
           <div class="teacher">${course.teacher}</div>
@@ -816,6 +891,26 @@
       return statusMap[status];
     }
 
+    function compareCourseByStatus(left, right) {
+      const order = { current: 0, future: 1, past: 2 };
+      const leftStatus = getCourseStatus(left);
+      const rightStatus = getCourseStatus(right);
+      if (leftStatus !== rightStatus) return order[leftStatus] - order[rightStatus];
+      return getCourseStart(left) - getCourseStart(right);
+    }
+
+    function setPrimaryCourse(course, tagText) {
+      const status = getCourseStatus(course);
+      const action = getCourseAction(status);
+      todayPrimary.className = status === "past" ? "primary-course primary-course--past" : "primary-course";
+      todayPrimaryTag.textContent = tagText;
+      todayPrimaryTitle.innerHTML = course.title;
+      todayPrimaryMeta.innerHTML = `${course.teacher} · ${course.audience}<br>腾讯会议：${course.room}`;
+      todayPrimaryLink.href = course.href;
+      todayPrimaryLink.className = status === "past" ? "join join--past" : "join";
+      todayPrimaryLink.innerHTML = `${action.label} <span>→</span>`;
+    }
+
     if (new URLSearchParams(location.search).has('export')) {
       document.documentElement.classList.add('export');
     }
@@ -834,7 +929,17 @@
         return start >= currentMonday && start <= currentSunday;
       })
       .sort((left, right) => getCourseStart(left) - getCourseStart(right));
-    const todayCourses = weekCourses.filter((course) => isSameDay(getCourseStart(course), now));
+    const orderedWeekCourses = [...weekCourses].sort((left, right) => {
+      const leftStatus = getCourseStatus(left);
+      const rightStatus = getCourseStatus(right);
+      if (leftStatus === rightStatus) return getCourseStart(left) - getCourseStart(right);
+      if (leftStatus === "past") return 1;
+      if (rightStatus === "past") return -1;
+      return getCourseStart(left) - getCourseStart(right);
+    });
+    const todayCourses = weekCourses
+      .filter((course) => isSameDay(getCourseStart(course), now))
+      .sort(compareCourseByStatus);
     const upcomingCourses = sortedCourses.filter((course) => getCourseStart(course) >= now);
 
     document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
@@ -849,11 +954,12 @@
         <div class="room">会议号</div>
         <div>操作</div>
       </div>
-      ${weekCourses.map(renderWeekRow).join("")}
+      ${orderedWeekCourses.map(renderWeekRow).join("")}
     `;
 
     const todayNote = document.getElementById("todayNote");
     const todaySectionTitle = document.getElementById("todaySectionTitle");
+    const todayPrimary = document.getElementById("todayPrimary");
     const todayPrimaryTag = document.getElementById("todayPrimaryTag");
     const todayPrimaryTitle = document.getElementById("todayPrimaryTitle");
     const todayPrimaryMeta = document.getElementById("todayPrimaryMeta");
@@ -864,30 +970,24 @@
       const [primaryCourse, ...secondaryCourses] = todayCourses;
       todaySectionTitle.textContent = "今日课程";
       todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
-      todayPrimaryTag.textContent = `${formatTime(getCourseStart(primaryCourse))} 今日课程`;
-      todayPrimaryTitle.innerHTML = primaryCourse.title;
-      todayPrimaryMeta.innerHTML = `${primaryCourse.teacher} · ${primaryCourse.audience}<br>腾讯会议：${primaryCourse.room}`;
-      todayPrimaryLink.href = primaryCourse.href;
-      todayPrimaryLink.innerHTML = `进入会议 <span>→</span>`;
+      setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
       todaySecondaryList.innerHTML = secondaryCourses.map(renderSmallCourse).join("");
     } else if (upcomingCourses.length > 0) {
       const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
       const nextStart = getCourseStart(nextCourse);
       todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
       todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
-      todayPrimaryTag.textContent = `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)} 即将开始`;
-      todayPrimaryTitle.innerHTML = nextCourse.title;
-      todayPrimaryMeta.innerHTML = `${nextCourse.teacher} · ${nextCourse.audience}<br>腾讯会议：${nextCourse.room}`;
-      todayPrimaryLink.href = nextCourse.href;
-      todayPrimaryLink.innerHTML = `进入会议 <span>→</span>`;
+      setPrimaryCourse(nextCourse, `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)}`);
       todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
     } else {
+      todayPrimary.className = "primary-course";
       todaySectionTitle.textContent = "近期课程";
       todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
       todayPrimaryTag.textContent = "今日暂无直播";
       todayPrimaryTitle.innerHTML = "近期暂无已排课程";
       todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
       todayPrimaryLink.href = "#weekly-schedule";
+      todayPrimaryLink.className = "join";
       todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
       todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
     }
