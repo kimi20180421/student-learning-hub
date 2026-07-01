@@ -876,7 +876,7 @@
 
     function getCourseStatus(course) {
       const start = getCourseStart(course);
-      const end = new Date(start.getTime() + 120 * 60 * 1000);
+      const end = new Date(start.getTime() + 60 * 60 * 1000);
       if (now >= start && now < end) return "current";
       if (now < start) return "future";
       return "past";
