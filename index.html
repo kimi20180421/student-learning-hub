@@ -321,6 +321,16 @@
       white-space: nowrap;
     }
 
+    .course-badge--upgrade {
+      color: #c97800;
+      background: rgba(255, 170, 60, .16);
+    }
+
+    .course-badge--share {
+      color: #5b4bd8;
+      background: rgba(120, 100, 240, .16);
+    }
+
     .small-course-info {
       min-width: 0;
       display: flex;
@@ -793,6 +803,123 @@
         audience: "UX、视觉",
         room: "262-941-454",
         href: "https://meeting.tencent.com/dm/qP42XNPe9vBw"
+      },
+      {
+        startsAt: "2026-07-04T16:30:00",
+        title: "作品集、投递、面试<br>一条龙：大厂师姐上岸经验全公开",
+        plainTitle: "作品集、投递、面试一条龙：大厂师姐上岸经验全公开",
+        teacher: "不愿透露姓名的师姐",
+        audience: "选听",
+        badge: "分享",
+        room: "124-252-586",
+        href: "https://meeting.tencent.com/dm/mzW1B76erLoZ"
+      },
+      {
+        startsAt: "2026-07-06T10:30:00",
+        title: "视觉行为设计<br>上",
+        plainTitle: "视觉行为设计/上",
+        teacher: "Sandy老师",
+        audience: "UX、视觉",
+        badge: "新增",
+        room: "112-130-701",
+        href: "https://meeting.tencent.com/dm/1gWw7C7h7BXu"
+      },
+      {
+        startsAt: "2026-07-06T14:30:00",
+        title: "视觉行为设计<br>下",
+        plainTitle: "视觉行为设计/下",
+        teacher: "Sandy老师",
+        audience: "UX、视觉",
+        badge: "新增",
+        room: "925-239-676",
+        href: "https://meeting.tencent.com/dm/io2oNYgnZas4"
+      },
+      {
+        startsAt: "2026-07-07T10:30:00",
+        title: "色彩版式<br>综合运用",
+        plainTitle: "色彩版式综合运用",
+        teacher: "张老师",
+        audience: "UX、视觉",
+        room: "442-925-916",
+        href: "https://meeting.tencent.com/dm/MRHOI3N0uC5V"
+      },
+      {
+        startsAt: "2026-07-07T14:30:00",
+        title: "Figma-软件基础<br>及操作详解",
+        plainTitle: "Figma-软件基础及操作详解",
+        teacher: "云嘉老师",
+        audience: "UX、视觉",
+        room: "197-331-933",
+        href: "https://meeting.tencent.com/dm/0u4dau6tVUpB"
+      },
+      {
+        startsAt: "2026-07-08T10:00:00",
+        title: "Figma-作业演示<br>讲解",
+        plainTitle: "Figma-作业演示讲解",
+        teacher: "云嘉老师",
+        audience: "UX、视觉",
+        room: "702-752-255",
+        href: "https://meeting.tencent.com/dm/D1Upe6fUHV47"
+      },
+      {
+        startsAt: "2026-07-08T14:30:00",
+        title: "Figma自动布局<br>及Design Token",
+        plainTitle: "Figma自动布局及Design Token",
+        teacher: "云嘉老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "新增",
+        room: "366-539-257",
+        href: "https://meeting.tencent.com/dm/cWuw9XFn8wMX"
+      },
+      {
+        startsAt: "2026-07-09T10:00:00",
+        title: "Figma组件使用<br>以及管理",
+        plainTitle: "Figma组件使用以及管理",
+        teacher: "云嘉老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "新增",
+        room: "124-172-310",
+        href: "https://meeting.tencent.com/dm/CgHvRC8JcIuQ"
+      },
+      {
+        startsAt: "2026-07-09T14:30:00",
+        title: "图标造型基础<br>及拔高",
+        plainTitle: "图标造型基础及拔高",
+        teacher: "晓译老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "升级",
+        room: "551-655-417",
+        href: "https://meeting.tencent.com/dm/xBow3ZVf5ema"
+      },
+      {
+        startsAt: "2026-07-10T10:00:00",
+        title: "色彩理论及设计<br>配色课程",
+        plainTitle: "色彩理论及设计配色课程",
+        teacher: "晓译老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "新增",
+        room: "741-791-112",
+        href: "https://meeting.tencent.com/dm/yBFnKI3QqeBp"
+      },
+      {
+        startsAt: "2026-07-11T10:00:00",
+        title: "认识AI工作流<br>及案例实操",
+        plainTitle: "认识AI工作流及案例实操",
+        teacher: "年糕老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "新增",
+        room: "624-254-005",
+        href: "https://meeting.tencent.com/dm/VZDbMrKxLPOG"
+      },
+      {
+        startsAt: "2026-07-11T14:30:00",
+        title: "Skill入门认知<br>及创建使用",
+        plainTitle: "Skill入门认知及创建使用",
+        teacher: "年糕老师",
+        audience: "UX、视觉（视觉选听）",
+        badge: "新增",
+        room: "705-810-062",
+        href: "https://meeting.tencent.com/dm/44yN5y3tdSMO"
       }
     ];
 
@@ -834,7 +961,10 @@
     }
 
     function renderCourseBadge(course) {
-      return course.isNew ? '<span class="course-badge">新增</span>' : "";
+      if (course.badge === "升级") return '<span class="course-badge course-badge--upgrade">升级</span>';
+      if (course.badge === "分享") return '<span class="course-badge course-badge--share">分享</span>';
+      if (course.badge === "新增") return '<span class="course-badge">新增</span>';
+      return "";
     }
 
     function renderSmallCourse(course) {
