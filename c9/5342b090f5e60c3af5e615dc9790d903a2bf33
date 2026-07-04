@@ -1,0 +1,66 @@
+index.html
+  s_a6e6c0ceca6829::t_2faf91dbccbb79 682-685 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a48ab726fce70da2e167f0b","tool_type":"agent","tool_id":"Edit","line_ranges":[{"Range":[682,685]}]}]}
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "c95342b090f5e60c3af5e615dc9790d903a2bf33",
+  "prompts": {},
+  "sessions": {
+    "s_a6e6c0ceca6829": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a43b060fb6c6e61d854f15d",
+        "model": "Doubao-Seed-2.1-Turbo__dev"
+      },
+      "human_author": "kimi20180421 <kimi20180421@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {
+    "index.html": [
+      {
+        "hash": "s_a6e6c0ceca6829::t_2faf91dbccbb79",
+        "line_ranges": [
+          {
+            "Range": [
+              682,
+              685
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a48ab726fce70da2e167f0b",
+            "tool_type": "agent",
+            "tool_id": "Edit",
+            "line_ranges": [
+              {
+                "Range": [
+                  682,
+                  685
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_a6e6c0ceca6829": {
+      "tool": "trae",
+      "conversation_id": "6a43b060fb6c6e61d854f15d",
+      "session_id": "6a43b060fb6c6e61d854f15d",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_a6e6c0ceca6829::t_2faf91dbccbb79": {
+      "tool": "trae",
+      "conversation_id": "6a43b060fb6c6e61d854f15d",
+      "session_id": "6a43b060fb6c6e61d854f15d",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
