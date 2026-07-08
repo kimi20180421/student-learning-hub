@@ -586,8 +586,8 @@
 
     <section class="hero">
       <div>
-        <p class="eyebrow">第二周，继续加油</p>
-        <h1>保持好奇心，<mark>设计就在生活里。</mark></h1>
+        <p class="eyebrow" id="heroEyebrow">第二周，继续加油</p>
+        <h1 id="heroTitle">保持好奇心，<mark>设计就在生活里。</mark></h1>
       </div>
       <div class="date">
         <strong id="currentWeekday">星期一</strong>
@@ -704,7 +704,7 @@
 
         <section class="tip">
           <div class="tip-kicker">TODAY'S NOTE · 今日提醒</div>
-          <p>把学到的方法，<br>用到每一天的实践里。</p>
+          <p id="tipContent">把学到的方法，<br>用到每一天的实践里。</p>
         </section>
       </aside>
     </div>
@@ -936,6 +936,19 @@
     const fullWeekNames = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     const termStartMonday = new Date(2026, 5, 29);
 
+    const weeklyContent = {
+      1: { eyebrow: "第1周，新起点", title: "把今天这一步走稳，<mark>答案会在路上出现。</mark>", tip: "先认识彼此，<br>再一起把这段学习旅程走好。" },
+      2: { eyebrow: "第2周，继续加油", title: "保持好奇心，<mark>设计就在生活里。</mark>", tip: "把学到的方法，<br>用到每一天的实践里。" },
+      3: { eyebrow: "第3周，厚积薄发", title: "细节决定品质，<mark>设计源于思考。</mark>", tip: "每一个小练习，<br>都是成长的基石。" },
+      4: { eyebrow: "第4周，进阶实战", title: "基础已就绪，<mark>是时候大展身手了。</mark>", tip: "从理论到实践，<br>准备好迎接新挑战。" },
+      5: { eyebrow: "第5周，项目实战", title: "真正的成长，<mark>从动手开始。</mark>", tip: "遇到问题别慌，<br>团队是你最强的后盾。" },
+      6: { eyebrow: "第6周，稳步前行", title: "用心打磨每一个细节，<mark>作品会说话。</mark>", tip: "不怕慢，就怕站，<br>持续迭代就是进步。" },
+      7: { eyebrow: "第7周，突破自我", title: "瓶颈是成长的阶梯，<mark>跨过去就是新境界。</mark>", tip: "遇到困难时，<br>换个角度看看。" },
+      8: { eyebrow: "第8周，全力冲刺", title: "坚持就是胜利，<mark>终点就在眼前。</mark>", tip: "每一天的付出，<br>都在为最终作品加分。" },
+      9: { eyebrow: "第9周，收官在即", title: "回顾来时路，<mark>收获满满。</mark>", tip: "整理作品集，<br>展示你的成长与实力。" },
+      10: { eyebrow: "第10周，毕业快乐", title: "结束是新的开始，<mark>未来可期。</mark>", tip: "保持热爱，<br>奔赴下一场山海。" }
+    };
+
     function startOfDay(date) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
@@ -1118,6 +1131,12 @@
       document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
       document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
       document.getElementById("weeklyNote").textContent = `第 ${weekNumber} 周 · ${weekCourses.length} 节课程`;
+      
+      const content = weeklyContent[weekNumber] || weeklyContent[10];
+      document.getElementById("heroEyebrow").textContent = content.eyebrow;
+      document.getElementById("heroTitle").innerHTML = content.title;
+      document.getElementById("tipContent").innerHTML = content.tip;
+
       document.getElementById("weekList").innerHTML = `
         <div class="week-head">
           <div>时间</div>
