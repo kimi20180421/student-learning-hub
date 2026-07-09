@@ -1095,11 +1095,13 @@
       todayPrimaryLink.innerHTML = `${action.label} <span>→</span>`;
     }
 
-    if (new URLSearchParams(location.search).has('export')) {
-      document.documentElement.classList.add('export');
-    }
+    try {
+      if (window.URLSearchParams && new URLSearchParams(location.search).has('export')) {
+        document.documentElement.classList.add('export');
+      }
+    } catch (e) {}
 
-    const sortedCourses = [...schedule].sort((left, right) => getCourseStart(left) - getCourseStart(right));
+    const sortedCourses = schedule.slice().sort((left, right) => getCourseStart(left) - getCourseStart(right));
     let now = new Date();
     const todayNote = document.getElementById("todayNote");
     const todaySectionTitle = document.getElementById("todaySectionTitle");
@@ -1124,7 +1126,7 @@
           return start >= currentMonday && start <= currentSunday;
         })
         .sort((left, right) => getCourseStart(left) - getCourseStart(right));
-      const orderedWeekCourses = [...weekCourses].sort((left, right) => {
+      const orderedWeekCourses = weekCourses.slice().sort((left, right) => {
         const leftStatus = getCourseStatus(left);
         const rightStatus = getCourseStatus(right);
         if (leftStatus === rightStatus) return getCourseStart(left) - getCourseStart(right);
