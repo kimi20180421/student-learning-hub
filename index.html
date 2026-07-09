@@ -41,6 +41,7 @@
         linear-gradient(rgba(42,87,164,.07) 1px, transparent 1px),
         linear-gradient(90deg, rgba(42,87,164,.07) 1px, transparent 1px);
       background-size: 30px 30px;
+      -webkit-mask-image: linear-gradient(to bottom, #000, transparent 84%);
       mask-image: linear-gradient(to bottom, #000, transparent 84%);
     }
 
@@ -128,7 +129,7 @@
     h1 {
       max-width: 900px;
       margin: 0;
-      font-family: "Songti SC", "STSong", serif;
+      font-family: "Songti SC", "STSong", "SimSun", "宋体", serif;
       font-size: clamp(37px, 3.4vw, 52px);
       line-height: 1.22;
       letter-spacing: -.05em;
@@ -1036,7 +1037,15 @@
     }
 
     function getCourseStart(course) {
-      return new Date(course.startsAt);
+      const parts = course.startsAt.split(/[-T:]/);
+      return new Date(
+        parseInt(parts[0], 10),
+        parseInt(parts[1], 10) - 1,
+        parseInt(parts[2], 10),
+        parseInt(parts[3], 10),
+        parseInt(parts[4], 10),
+        parseInt(parts[5], 10)
+      );
     }
 
     function formatTime(date) {
@@ -1176,13 +1185,21 @@
       }
     }
 
-    renderSchedule();
-    enforceNewTabLinks();
+    function safeRender() {
+      try {
+        renderSchedule();
+      } catch (e) {
+        console.error("渲染失败:", e);
+      }
+    }
+
+    safeRender();
+    try { enforceNewTabLinks(); } catch (e) { console.error(e); }
 
     const nextMinuteDelay = (60 - new Date().getSeconds()) * 1000 - new Date().getMilliseconds();
     setTimeout(() => {
-      renderSchedule();
-      setInterval(renderSchedule, 60 * 1000);
+      safeRender();
+      setInterval(safeRender, 60 * 1000);
     }, Math.max(0, nextMinuteDelay));
   </script>
 </body>
