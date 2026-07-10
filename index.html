@@ -1028,8 +1028,12 @@
       );
     }
 
+    function padZero(num) {
+      return num < 10 ? "0" + num : "" + num;
+    }
+
     function formatTime(date) {
-      return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+      return padZero(date.getHours()) + ":" + padZero(date.getMinutes());
     }
 
     function isSameDay(left, right) {
@@ -1075,22 +1079,49 @@
       todayPrimaryLink.innerHTML = `${action.label} <span>→</span>`;
     }
 
-    try {
-      if (window.URLSearchParams && new URLSearchParams(location.search).has('export')) {
-        document.documentElement.classList.add('export');
-      }
-    } catch (e) {}
+    var sortedCourses = [];
+    var now = new Date();
+    var todayNote = null;
+    var todaySectionTitle = null;
+    var todayPrimary = null;
+    var todayPrimaryTag = null;
+    var todayPrimaryTitle = null;
+    var todayPrimaryMeta = null;
+    var todayPrimaryLink = null;
+    var todaySecondaryList = null;
 
-    const sortedCourses = schedule.slice().sort((left, right) => getCourseStart(left) - getCourseStart(right));
-    let now = new Date();
-    const todayNote = document.getElementById("todayNote");
-    const todaySectionTitle = document.getElementById("todaySectionTitle");
-    const todayPrimary = document.getElementById("todayPrimary");
-    const todayPrimaryTag = document.getElementById("todayPrimaryTag");
-    const todayPrimaryTitle = document.getElementById("todayPrimaryTitle");
-    const todayPrimaryMeta = document.getElementById("todayPrimaryMeta");
-    const todayPrimaryLink = document.getElementById("todayPrimaryLink");
-    const todaySecondaryList = document.getElementById("todaySecondaryList");
+    function init() {
+      try {
+        if (window.URLSearchParams && new URLSearchParams(location.search).has('export')) {
+          document.documentElement.classList.add('export');
+        }
+      } catch (e) {}
+
+      try {
+        sortedCourses = schedule.slice().sort(function(left, right) {
+          return getCourseStart(left) - getCourseStart(right);
+        });
+        todayNote = document.getElementById("todayNote");
+        todaySectionTitle = document.getElementById("todaySectionTitle");
+        todayPrimary = document.getElementById("todayPrimary");
+        todayPrimaryTag = document.getElementById("todayPrimaryTag");
+        todayPrimaryTitle = document.getElementById("todayPrimaryTitle");
+        todayPrimaryMeta = document.getElementById("todayPrimaryMeta");
+        todayPrimaryLink = document.getElementById("todayPrimaryLink");
+        todaySecondaryList = document.getElementById("todaySecondaryList");
+
+        safeRender();
+        try { enforceNewTabLinks(); } catch (e) {}
+
+        var nextMinuteDelay = (60 - new Date().getSeconds()) * 1000 - new Date().getMilliseconds();
+        setTimeout(function() {
+          safeRender();
+          setInterval(safeRender, 60 * 1000);
+        }, Math.max(0, nextMinuteDelay));
+      } catch (e) {
+        console.error("初始化失败:", e);
+      }
+    }
 
     function renderSchedule() {
       now = new Date();
@@ -1175,14 +1206,7 @@
       }
     }
 
-    safeRender();
-    try { enforceNewTabLinks(); } catch (e) { console.error(e); }
-
-    const nextMinuteDelay = (60 - new Date().getSeconds()) * 1000 - new Date().getMilliseconds();
-    setTimeout(() => {
-      safeRender();
-      setInterval(safeRender, 60 * 1000);
-    }, Math.max(0, nextMinuteDelay));
+    init();
   </script>
 </body>
 </html>
