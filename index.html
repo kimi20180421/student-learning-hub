@@ -711,7 +711,7 @@
     </div>
   </main>
   <script>
-    const schedule = [
+    var schedule = [
       {
         startsAt: "2026-07-01T10:00:00",
         title: "欢迎来到暑假集训-北京站",
@@ -923,11 +923,11 @@
       },
     ];
 
-    const weekNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-    const fullWeekNames = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-    const termStartMonday = new Date(2026, 5, 29);
+    var weekNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    var fullWeekNames = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    var termStartMonday = new Date(2026, 5, 29);
 
-    const weeklyContent = {
+    var weeklyContent = {
       1: { eyebrow: "第1周，新起点", title: "把今天这一步走稳，<mark>答案会在路上出现。</mark>", tip: "先认识彼此，<br>再一起把这段学习旅程走好。" },
       2: { eyebrow: "第2周，继续加油", title: "保持好奇心，<mark>设计就在生活里。</mark>", tip: "把学到的方法，<br>用到每一天的实践里。" },
       3: { eyebrow: "第3周，厚积薄发", title: "细节决定品质，<mark>设计源于思考。</mark>", tip: "每一个小练习，<br>都是成长的基石。" },
@@ -945,32 +945,32 @@
     }
 
     function getMonday(date) {
-      const copy = startOfDay(date);
-      const day = copy.getDay();
-      const diff = day === 0 ? -6 : 1 - day;
+      var copy = startOfDay(date);
+      var day = copy.getDay();
+      var diff = day === 0 ? -6 : 1 - day;
       copy.setDate(copy.getDate() + diff);
       return copy;
     }
 
     function formatDate(date) {
-      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+      return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
     }
 
     function getCourseSectionTitle(targetDate) {
-      const today = startOfDay(now);
-      const courseDay = startOfDay(targetDate);
-      const diffDays = Math.round((courseDay - today) / (24 * 60 * 60 * 1000));
-      const currentWeekStart = getMonday(today);
-      const targetWeekStart = getMonday(courseDay);
-      const diffWeeks = Math.round((targetWeekStart - currentWeekStart) / (7 * 24 * 60 * 60 * 1000));
+      var today = startOfDay(now);
+      var courseDay = startOfDay(targetDate);
+      var diffDays = Math.round((courseDay - today) / (24 * 60 * 60 * 1000));
+      var currentWeekStart = getMonday(today);
+      var targetWeekStart = getMonday(courseDay);
+      var diffWeeks = Math.round((targetWeekStart - currentWeekStart) / (7 * 24 * 60 * 60 * 1000));
 
       if (diffDays <= 0) return "今日课程";
       if (diffDays === 1) return "明日课程";
       if (diffDays === 2) return "后天课程";
       if (today.getDay() === 6 && diffWeeks >= 1) return "下周课程";
-      if (diffWeeks === 0) return `${weekNames[targetDate.getDay()]}课程`;
-      if (diffWeeks === 1) return `下${weekNames[targetDate.getDay()]}课程`;
-      return `${weekNames[targetDate.getDay()]}课程`;
+      if (diffWeeks === 0) return weekNames[targetDate.getDay()] + "课程";
+      if (diffWeeks === 1) return "下" + weekNames[targetDate.getDay()] + "课程";
+      return weekNames[targetDate.getDay()] + "课程";
     }
 
     function renderCourseBadge(course) {
@@ -981,53 +981,52 @@
     }
 
     function renderSmallCourse(course) {
-      const start = getCourseStart(course);
-      const status = getCourseStatus(course);
-      const action = getCourseAction(status);
-      const cardClassName = status === "past" ? "small-course small-course--past" : "small-course";
-      return `
-        <div class="${cardClassName}">
-          <div class="small-course-info">
-            <span class="time">${formatTime(start)}</span>
-            <strong>${course.plainTitle}${renderCourseBadge(course)}</strong>
-            <div class="small-course-meta small-course-meta-inline">
-              <span>${course.teacher}</span>
-              <span>${course.audience}</span>
-            </div>
-            <div class="small-course-meta">会议号 ${course.room}</div>
-          </div>
-          <div class="small-course-action"><a class="${action.className}" href="${course.href}" target="_blank" rel="noreferrer">${action.label}</a></div>
-        </div>
-      `;
+      var start = getCourseStart(course);
+      var status = getCourseStatus(course);
+      var action = getCourseAction(status);
+      var cardClassName = status === "past" ? "small-course small-course--past" : "small-course";
+      return '' +
+        '<div class="' + cardClassName + '">' +
+          '<div class="small-course-info">' +
+            '<span class="time">' + formatTime(start) + '</span>' +
+            '<strong>' + course.plainTitle + renderCourseBadge(course) + '</strong>' +
+            '<div class="small-course-meta small-course-meta-inline">' +
+              '<span>' + course.teacher + '</span>' +
+              '<span>' + course.audience + '</span>' +
+            '</div>' +
+            '<div class="small-course-meta">会议号 ' + course.room + '</div>' +
+          '</div>' +
+          '<div class="small-course-action"><a class="' + action.className + '" href="' + course.href + '" target="_blank" rel="noreferrer">' + action.label + '</a></div>' +
+        '</div>';
     }
 
     function renderWeekRow(course) {
-      const status = getCourseStatus(course);
-      const action = getCourseAction(status);
-      const start = getCourseStart(course);
-      const rowClassName = status === "past" ? "week-row week-row--past" : "week-row";
+      var status = getCourseStatus(course);
+      var action = getCourseAction(status);
+      var start = getCourseStart(course);
+      var rowClassName = status === "past" ? "week-row week-row--past" : "week-row";
 
-      return `
-        <div class="${rowClassName}">
-          <div class="week-time">${weekNames[start.getDay()]}<br>${formatTime(start)}</div>
-          <div class="week-title"><strong>${course.plainTitle}${renderCourseBadge(course)}</strong></div>
-          <div class="teacher">${course.teacher}</div>
-          <div class="audience">${course.audience}</div>
-          <div class="room">${course.room}</div>
-          <div class="week-action-wrap"><a class="${action.className}" href="${course.href}" target="_blank" rel="noreferrer">${action.label}</a></div>
-        </div>
-      `;
+      return '' +
+        '<div class="' + rowClassName + '">' +
+          '<div class="week-time">' + weekNames[start.getDay()] + '<br>' + formatTime(start) + '</div>' +
+          '<div class="week-title"><strong>' + course.plainTitle + renderCourseBadge(course) + '</strong></div>' +
+          '<div class="teacher">' + course.teacher + '</div>' +
+          '<div class="audience">' + course.audience + '</div>' +
+          '<div class="room">' + course.room + '</div>' +
+          '<div class="week-action-wrap"><a class="' + action.className + '" href="' + course.href + '" target="_blank" rel="noreferrer">' + action.label + '</a></div>' +
+        '</div>';
     }
 
     function enforceNewTabLinks() {
-      document.querySelectorAll('a[href]').forEach((link) => {
-        link.target = "_blank";
-        link.rel = "noreferrer";
-      });
+      var links = document.querySelectorAll('a[href]');
+      for (var i = 0; i < links.length; i++) {
+        links[i].target = "_blank";
+        links[i].rel = "noreferrer";
+      }
     }
 
     function getCourseStart(course) {
-      const parts = course.startsAt.split(/[-T:]/);
+      var parts = course.startsAt.split(/[-T:]/);
       return new Date(
         parseInt(parts[0], 10),
         parseInt(parts[1], 10) - 1,
@@ -1053,15 +1052,15 @@
     }
 
     function getCourseStatus(course) {
-      const start = getCourseStart(course);
-      const end = new Date(start.getTime() + 60 * 60 * 1000);
+      var start = getCourseStart(course);
+      var end = new Date(start.getTime() + 60 * 60 * 1000);
       if (now >= start && now < end) return "current";
       if (now < start) return "future";
       return "past";
     }
 
     function getCourseAction(status) {
-      const statusMap = {
+      var statusMap = {
         current: { label: "进入会议", className: "week-action week-action--current" },
         future: { label: "加入会议列表", className: "week-action week-action--future" },
         past: { label: "已结束", className: "week-action week-action--past" }
@@ -1070,23 +1069,23 @@
     }
 
     function compareCourseByStatus(left, right) {
-      const order = { current: 0, future: 1, past: 2 };
-      const leftStatus = getCourseStatus(left);
-      const rightStatus = getCourseStatus(right);
+      var order = { current: 0, future: 1, past: 2 };
+      var leftStatus = getCourseStatus(left);
+      var rightStatus = getCourseStatus(right);
       if (leftStatus !== rightStatus) return order[leftStatus] - order[rightStatus];
       return getCourseStart(left) - getCourseStart(right);
     }
 
     function setPrimaryCourse(course, tagText) {
-      const status = getCourseStatus(course);
-      const action = getCourseAction(status);
+      var status = getCourseStatus(course);
+      var action = getCourseAction(status);
       todayPrimary.className = status === "past" ? "primary-course primary-course--past" : "primary-course";
       todayPrimaryTag.textContent = tagText;
-      todayPrimaryTitle.innerHTML = `${course.title}${renderCourseBadge(course)}`;
-      todayPrimaryMeta.innerHTML = `${course.teacher} · ${course.audience}<br>腾讯会议：${course.room}`;
+      todayPrimaryTitle.innerHTML = course.title + renderCourseBadge(course);
+      todayPrimaryMeta.innerHTML = course.teacher + " · " + course.audience + "<br>腾讯会议：" + course.room;
       todayPrimaryLink.href = course.href;
       todayPrimaryLink.className = status === "past" ? "join join--past" : "join";
-      todayPrimaryLink.innerHTML = `${action.label} <span>→</span>`;
+      todayPrimaryLink.innerHTML = action.label + ' <span>→</span>';
     }
 
     var sortedCourses = [];
@@ -1135,76 +1134,99 @@
 
     function renderSchedule() {
       now = new Date();
-      const currentMonday = getMonday(now);
-      const currentSunday = new Date(currentMonday);
+      var currentMonday = getMonday(now);
+      var currentSunday = new Date(currentMonday);
       currentSunday.setDate(currentSunday.getDate() + 6);
       currentSunday.setHours(23, 59, 59, 999);
-      const diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
-      const weekNumber = Math.max(1, diffWeeks + 1);
-      const weekCourses = sortedCourses
-        .filter((course) => {
-          const start = getCourseStart(course);
+      var diffWeeks = Math.floor((currentMonday - termStartMonday) / (7 * 24 * 60 * 60 * 1000));
+      var weekNumber = Math.max(1, diffWeeks + 1);
+      var weekCourses = sortedCourses
+        .filter(function(course) {
+          var start = getCourseStart(course);
           return start >= currentMonday && start <= currentSunday;
         })
-        .sort((left, right) => getCourseStart(left) - getCourseStart(right));
-      const orderedWeekCourses = weekCourses.slice().sort((left, right) => {
-        const leftStatus = getCourseStatus(left);
-        const rightStatus = getCourseStatus(right);
+        .sort(function(left, right) {
+          return getCourseStart(left) - getCourseStart(right);
+        });
+      var orderedWeekCourses = weekCourses.slice().sort(function(left, right) {
+        var leftStatus = getCourseStatus(left);
+        var rightStatus = getCourseStatus(right);
         if (leftStatus === rightStatus) return getCourseStart(left) - getCourseStart(right);
         if (leftStatus === "past") return 1;
         if (rightStatus === "past") return -1;
         return getCourseStart(left) - getCourseStart(right);
       });
-      const todayCourses = weekCourses
-        .filter((course) => isSameDay(getCourseStart(course), now))
+      var todayCourses = weekCourses
+        .filter(function(course) {
+          return isSameDay(getCourseStart(course), now);
+        })
         .sort(compareCourseByStatus);
-      const upcomingCourses = sortedCourses.filter((course) => getCourseStart(course) >= now);
+      var upcomingCourses = sortedCourses.filter(function(course) {
+        return getCourseStart(course) >= now;
+      });
 
       document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
-      document.getElementById("currentDateMeta").textContent = `${formatDate(now)} · 第${weekNumber}周`;
-      document.getElementById("weeklyNote").textContent = `第 ${weekNumber} 周 · ${weekCourses.length} 节课程`;
+      document.getElementById("currentDateMeta").textContent = formatDate(now) + " · 第" + weekNumber + "周";
+      document.getElementById("weeklyNote").textContent = "第 " + weekNumber + " 周 · " + weekCourses.length + " 节课程";
       
-      const content = weeklyContent[weekNumber] || weeklyContent[10];
+      var content = weeklyContent[weekNumber] || weeklyContent[10];
       document.getElementById("heroEyebrow").textContent = content.eyebrow;
       document.getElementById("heroTitle").innerHTML = content.title;
       document.getElementById("tipContent").innerHTML = content.tip;
 
-      document.getElementById("weekList").innerHTML = `
-        <div class="week-head">
-          <div>时间</div>
-          <div>课程</div>
-          <div>主讲老师</div>
-          <div>适合班型</div>
-          <div class="room">会议号</div>
-          <div>操作</div>
-        </div>
-        ${orderedWeekCourses.map(renderWeekRow).join("")}
-      `;
+      var weekRowsHtml = "";
+      for (var i = 0; i < orderedWeekCourses.length; i++) {
+        weekRowsHtml += renderWeekRow(orderedWeekCourses[i]);
+      }
+      document.getElementById("weekList").innerHTML =
+        '<div class="week-head">' +
+          '<div>时间</div>' +
+          '<div>课程</div>' +
+          '<div>主讲老师</div>' +
+          '<div>适合班型</div>' +
+          '<div class="room">会议号</div>' +
+          '<div>操作</div>' +
+        '</div>' +
+        weekRowsHtml;
 
       if (todayCourses.length > 0) {
-        const [primaryCourse, ...secondaryCourses] = todayCourses;
+        var primaryCourse = todayCourses[0];
+        var secondaryCourses = todayCourses.slice(1);
         todaySectionTitle.textContent = "今日课程";
-        todayNote.textContent = `${todayCourses.length} 节课程 · 第${weekNumber}周`;
+        todayNote.textContent = todayCourses.length + " 节课程 · 第" + weekNumber + "周";
         setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
-        todaySecondaryList.innerHTML = secondaryCourses.map(renderSmallCourse).join("");
+        var secondaryHtml = "";
+        for (var j = 0; j < secondaryCourses.length; j++) {
+          secondaryHtml += renderSmallCourse(secondaryCourses[j]);
+        }
+        todaySecondaryList.innerHTML = secondaryHtml;
       } else if (upcomingCourses.length > 0) {
-        const [nextCourse, ...restUpcomingCourses] = upcomingCourses;
-        const nextStart = getCourseStart(nextCourse);
+        var nextCourse = upcomingCourses[0];
+        var restUpcomingCourses = upcomingCourses.slice(1);
+        var nextStart = getCourseStart(nextCourse);
         todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
-        todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
-        setPrimaryCourse(nextCourse, `${weekNames[nextStart.getDay()]} ${formatTime(nextStart)}`);
-        todaySecondaryList.innerHTML = restUpcomingCourses.slice(0, 2).map(renderSmallCourse).join("");
+        todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
+        setPrimaryCourse(nextCourse, weekNames[nextStart.getDay()] + " " + formatTime(nextStart));
+        var restHtml = "";
+        for (var k = 0; k < Math.min(2, restUpcomingCourses.length); k++) {
+          restHtml += renderSmallCourse(restUpcomingCourses[k]);
+        }
+        todaySecondaryList.innerHTML = restHtml;
       } else {
         todayPrimary.className = "primary-course";
         todaySectionTitle.textContent = "近期课程";
-        todayNote.textContent = `今日暂无课程 · 第${weekNumber}周`;
+        todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
         todayPrimaryTag.textContent = "今日暂无直播";
         todayPrimaryTitle.innerHTML = "近期暂无已排课程";
-        todayPrimaryMeta.innerHTML = `今天是${fullWeekNames[now.getDay()]}，当前按本周记为第${weekNumber}周。<br>可在下方查看本周课表安排。`;
+        todayPrimaryMeta.innerHTML = "今天是" + fullWeekNames[now.getDay()] + "，当前按本周记为第" + weekNumber + "周。<br>可在下方查看本周课表安排。";
         todayPrimaryLink.href = "#weekly-schedule";
         todayPrimaryLink.className = "join";
-        todayPrimaryLink.innerHTML = `查看本周课表 <span>→</span>`;
-        todaySecondaryList.innerHTML = weekCourses.slice(0, 2).map(renderSmallCourse).join("");
+        todayPrimaryLink.innerHTML = '查看本周课表 <span>→</span>';
+        var weekHtml = "";
+        for (var m = 0; m < Math.min(2, weekCourses.length); m++) {
+          weekHtml += renderSmallCourse(weekCourses[m]);
+        }
+        todaySecondaryList.innerHTML = weekHtml;
       }
     }
 
