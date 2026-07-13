@@ -63,7 +63,10 @@
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       pointer-events: none;
       opacity: .28;
       background:
@@ -79,7 +82,8 @@
     .page {
       position: relative;
       z-index: 1;
-      width: min(1380px, calc(100% - 64px));
+      width: calc(100% - 64px);
+      max-width: 1380px;
       margin: 0 auto;
       padding: 24px 0 48px;
     }
@@ -93,13 +97,12 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
       font-size: 19px;
       font-weight: 760;
       letter-spacing: -.04em;
     }
 
-    .brand span { color: #6c7b9c; font-weight: 520; }
+    .brand span { color: #6c7b9c; font-weight: 520; margin-left: 14px; }
 
     .mark {
       width: 32px;
@@ -108,6 +111,7 @@
       align-items: center;
       justify-content: center;
       flex: 0 0 32px;
+      margin-right: 14px;
     }
 
     .mark img {
@@ -139,7 +143,6 @@
     .eyebrow {
       display: flex;
       align-items: center;
-      gap: 9px;
       margin: 0 0 16px;
       color: #496aa5;
       font-size: 13px;
@@ -151,6 +154,7 @@
       content: "";
       width: 20px;
       height: 3px;
+      margin-right: 9px;
       border-radius: 3px;
       background: var(--orange);
     }
@@ -159,7 +163,7 @@
       max-width: 900px;
       margin: 0;
       font-family: "Songti SC", "STSong", "SimSun", "宋体", serif;
-      font-size: clamp(37px, 3.4vw, 52px);
+      font-size: 46px;
       line-height: 1.22;
       letter-spacing: -.05em;
     }
@@ -184,13 +188,14 @@
 
     .layout {
       display: flex;
-      gap: 22px;
       align-items: flex-start;
     }
     .layout .left { flex: 1.72; min-width: 0; }
-    .layout .right { flex: 0.72; min-width: 350px; max-width: 450px; }
+    .layout .right { flex: 0.72; min-width: 350px; max-width: 450px; margin-left: 22px; }
 
-    .left { display: flex; flex-direction: column; gap: 20px; }
+    .left { display: flex; flex-direction: column; }
+    .left > * { margin-top: 20px; }
+    .left > *:first-child { margin-top: 0; }
 
     .panel {
       border: 1px solid rgba(255,255,255,.82);
@@ -213,10 +218,9 @@
 
     .today-grid {
       display: flex;
-      gap: 14px;
     }
     .today-grid .primary-course { flex: 1.14; min-width: 0; }
-    .today-grid .small-courses { flex: 0.86; min-width: 270px; }
+    .today-grid .small-courses { flex: 0.86; min-width: 270px; margin-left: 14px; }
 
     .primary-course {
       position: relative;
@@ -243,7 +247,7 @@
     }
 
     .tag {
-      width: fit-content;
+      align-self: flex-start;
       margin-bottom: 10px;
       padding: 0;
       color: rgba(248,251,255,.82);
@@ -269,9 +273,8 @@
     }
 
     .join {
-      width: fit-content;
+      align-self: flex-start;
       display: inline-flex;
-      gap: 8px;
       align-items: center;
       margin-top: auto;
       padding: 10px 14px;
@@ -281,6 +284,8 @@
       font-size: 13px;
       font-weight: 760;
     }
+
+    .join span { margin-left: 8px; }
 
     .primary-course--past {
       color: #96a3bb;
@@ -301,18 +306,21 @@
       padding-right: 0;
     }
 
-    .small-courses { display: flex; flex-direction: column; gap: 12px; }
+    .small-courses { display: flex; flex-direction: column; }
+    .small-courses > * { margin-top: 12px; }
+    .small-courses > *:first-child { margin-top: 0; }
 
     .small-course {
       position: relative;
       display: flex;
-      align-items: start;
-      gap: 14px;
+      align-items: flex-start;
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 18px;
       background: #f8fbff;
     }
+
+    .small-course > .small-course-action { margin-left: 14px; }
 
     .small-course:nth-child(2) { background: #edf6ff; }
     .small-course.small-course--past { background: #fff; }
@@ -367,8 +375,9 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
     }
+    .small-course-info > * { margin-top: 4px; }
+    .small-course-info > *:first-child { margin-top: 0; }
 
     .small-course-meta {
       color: var(--muted);
@@ -379,9 +388,10 @@
     .small-course-meta-inline {
       display: flex;
       align-items: center;
-      gap: 10px;
       flex-wrap: wrap;
     }
+    .small-course-meta-inline > * { margin-right: 10px; }
+    .small-course-meta-inline > *:last-child { margin-right: 0; }
 
     .small-course-action {
       display: flex;
@@ -398,13 +408,14 @@
     .week-head {
       display: flex;
       align-items: center;
-      gap: 14px;
       min-height: 42px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
     }
+    .week-head > div { margin-right: 14px; }
+    .week-head > div:last-child { margin-right: 0; }
     .week-head > div:nth-child(1) { width: 74px; flex-shrink: 0; }
     .week-head > div:nth-child(2) { flex: 1; min-width: 0; }
     .week-head > div:nth-child(3) { width: 136px; flex-shrink: 0; }
@@ -415,11 +426,12 @@
     .week-row {
       display: flex;
       align-items: center;
-      gap: 14px;
       min-height: 76px;
       border-top: 1px solid var(--line);
       font-size: 13px;
     }
+    .week-row > div { margin-right: 14px; }
+    .week-row > div:last-child { margin-right: 0; }
     .week-row > div:nth-child(1) { width: 74px; flex-shrink: 0; }
     .week-row > div:nth-child(2) { flex: 1; min-width: 0; }
     .week-row > div:nth-child(3) { width: 136px; flex-shrink: 0; }
@@ -493,8 +505,9 @@
       width: 100%;
       display: flex;
       align-items: center;
-      gap: 14px;
     }
+    .shortcut-item > * { margin-right: 14px; }
+    .shortcut-item > *:last-child { margin-right: 0; }
     .shortcut-item .icon { width: 44px; flex-shrink: 0; }
     .shortcut-item > div:nth-child(2) { flex: 1; min-width: 0; }
     .shortcut-item {
@@ -597,14 +610,18 @@
       .hero::after { display: none; }
       .layout { flex-direction: column; }
       .layout .left, .layout .right { flex: none; width: auto; max-width: none; }
-      .right { display: flex; gap: 18px; }
+      .layout .right { margin-left: 0; margin-top: 22px; }
+      .right { display: flex; }
+      .right > * + * { margin-left: 18px; }
       .right > div:nth-child(1) { flex: 1.35; }
       .right > div:nth-child(2) { flex: 0.65; }
       .tip { margin-top: 0; min-height: 100%; }
     }
 
     @media (max-width: 820px) {
-      .hero { align-items: flex-start; flex-direction: column; gap: 20px; }
+      h1 { font-size: 37px; }
+      .hero { align-items: flex-start; flex-direction: column; }
+      .hero > div + div { margin-top: 20px; }
       .date { text-align: left; }
       .today-grid .primary-course { flex: 1.12; }
       .today-grid .small-courses { flex: 0.88; }
@@ -615,6 +632,7 @@
       .week-head .room,
       .week-row .room { display: none; }
       .right { flex-direction: column; }
+      .right > * + * { margin-left: 0; margin-top: 18px; }
       .panel-inner, .weekly { padding-left: 22px; padding-right: 22px; }
     }
 
@@ -1282,6 +1300,20 @@
       }
     }
 
+    function setText(id, text) {
+      try {
+        var el = document.getElementById(id);
+        if (el) el.textContent = text;
+      } catch (e) {}
+    }
+
+    function setHtml(id, html) {
+      try {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      } catch (e) {}
+    }
+
     function renderSchedule() {
       now = new Date();
       var currentMonday = getMonday(now);
@@ -1315,69 +1347,81 @@
         return getCourseStart(course) >= now;
       });
 
-      document.getElementById("currentWeekday").textContent = fullWeekNames[now.getDay()];
-      document.getElementById("currentDateMeta").textContent = formatDate(now) + " · 第" + weekNumber + "周";
-      document.getElementById("weeklyNote").textContent = "第 " + weekNumber + " 周 · " + weekCourses.length + " 节课程";
-      
-      var content = weeklyContent[weekNumber] || weeklyContent[10];
-      document.getElementById("heroEyebrow").textContent = content.eyebrow;
-      document.getElementById("heroTitle").innerHTML = content.title;
-      document.getElementById("tipContent").innerHTML = content.tip;
+      // 区块一：顶部日期与周次
+      try {
+        setText("currentWeekday", fullWeekNames[now.getDay()]);
+        setText("currentDateMeta", formatDate(now) + " · 第" + weekNumber + "周");
+        setText("weeklyNote", "第 " + weekNumber + " 周 · " + weekCourses.length + " 节课程");
+      } catch (e) { console.error("日期区块渲染失败:", e); }
 
-      var weekRowsHtml = "";
-      for (var i = 0; i < orderedWeekCourses.length; i++) {
-        weekRowsHtml += renderWeekRow(orderedWeekCourses[i]);
-      }
-      document.getElementById("weekList").innerHTML =
-        '<div class="week-head">' +
-          '<div>时间</div>' +
-          '<div>课程</div>' +
-          '<div>主讲老师</div>' +
-          '<div>适合班型</div>' +
-          '<div class="room">会议号</div>' +
-          '<div>操作</div>' +
-        '</div>' +
-        weekRowsHtml;
+      // 区块二：顶部激励文案与今日提醒
+      try {
+        var content = weeklyContent[weekNumber] || weeklyContent[10];
+        setText("heroEyebrow", content.eyebrow);
+        setHtml("heroTitle", content.title);
+        setHtml("tipContent", content.tip);
+      } catch (e) { console.error("文案区块渲染失败:", e); }
 
-      if (todayCourses.length > 0) {
-        var primaryCourse = todayCourses[0];
-        var secondaryCourses = todayCourses.slice(1);
-        todaySectionTitle.textContent = "今日课程";
-        todayNote.textContent = todayCourses.length + " 节课程 · 第" + weekNumber + "周";
-        setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
-        var secondaryHtml = "";
-        for (var j = 0; j < secondaryCourses.length; j++) {
-          secondaryHtml += renderSmallCourse(secondaryCourses[j]);
+      // 区块三：本周课表
+      try {
+        var weekRowsHtml = "";
+        for (var i = 0; i < orderedWeekCourses.length; i++) {
+          weekRowsHtml += renderWeekRow(orderedWeekCourses[i]);
         }
-        todaySecondaryList.innerHTML = secondaryHtml;
-      } else if (upcomingCourses.length > 0) {
-        var nextCourse = upcomingCourses[0];
-        var restUpcomingCourses = upcomingCourses.slice(1);
-        var nextStart = getCourseStart(nextCourse);
-        todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
-        todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
-        setPrimaryCourse(nextCourse, weekNames[nextStart.getDay()] + " " + formatTime(nextStart));
-        var restHtml = "";
-        for (var k = 0; k < Math.min(2, restUpcomingCourses.length); k++) {
-          restHtml += renderSmallCourse(restUpcomingCourses[k]);
+        setHtml("weekList",
+          '<div class="week-head">' +
+            '<div>时间</div>' +
+            '<div>课程</div>' +
+            '<div>主讲老师</div>' +
+            '<div>适合班型</div>' +
+            '<div class="room">会议号</div>' +
+            '<div>操作</div>' +
+          '</div>' +
+          weekRowsHtml);
+      } catch (e) { console.error("本周课表区块渲染失败:", e); }
+
+      // 区块四：今日课程主卡与副卡
+      try {
+        if (todayCourses.length > 0) {
+          var primaryCourse = todayCourses[0];
+          var secondaryCourses = todayCourses.slice(1);
+          todaySectionTitle.textContent = "今日课程";
+          todayNote.textContent = todayCourses.length + " 节课程 · 第" + weekNumber + "周";
+          setPrimaryCourse(primaryCourse, formatTime(getCourseStart(primaryCourse)));
+          var secondaryHtml = "";
+          for (var j = 0; j < secondaryCourses.length; j++) {
+            secondaryHtml += renderSmallCourse(secondaryCourses[j]);
+          }
+          todaySecondaryList.innerHTML = secondaryHtml;
+        } else if (upcomingCourses.length > 0) {
+          var nextCourse = upcomingCourses[0];
+          var restUpcomingCourses = upcomingCourses.slice(1);
+          var nextStart = getCourseStart(nextCourse);
+          todaySectionTitle.textContent = getCourseSectionTitle(nextStart);
+          todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
+          setPrimaryCourse(nextCourse, weekNames[nextStart.getDay()] + " " + formatTime(nextStart));
+          var restHtml = "";
+          for (var k = 0; k < Math.min(2, restUpcomingCourses.length); k++) {
+            restHtml += renderSmallCourse(restUpcomingCourses[k]);
+          }
+          todaySecondaryList.innerHTML = restHtml;
+        } else {
+          todayPrimary.className = "primary-course";
+          todaySectionTitle.textContent = "近期课程";
+          todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
+          todayPrimaryTag.textContent = "今日暂无直播";
+          todayPrimaryTitle.innerHTML = "近期暂无已排课程";
+          todayPrimaryMeta.innerHTML = "今天是" + fullWeekNames[now.getDay()] + "，当前按本周记为第" + weekNumber + "周。<br>可在下方查看本周课表安排。";
+          todayPrimaryLink.href = "#weekly-schedule";
+          todayPrimaryLink.className = "join";
+          todayPrimaryLink.innerHTML = '查看本周课表 <span>→</span>';
+          var weekHtml = "";
+          for (var m = 0; m < Math.min(2, weekCourses.length); m++) {
+            weekHtml += renderSmallCourse(weekCourses[m]);
+          }
+          todaySecondaryList.innerHTML = weekHtml;
         }
-        todaySecondaryList.innerHTML = restHtml;
-      } else {
-        todayPrimary.className = "primary-course";
-        todaySectionTitle.textContent = "近期课程";
-        todayNote.textContent = "今日暂无课程 · 第" + weekNumber + "周";
-        todayPrimaryTag.textContent = "今日暂无直播";
-        todayPrimaryTitle.innerHTML = "近期暂无已排课程";
-        todayPrimaryMeta.innerHTML = "今天是" + fullWeekNames[now.getDay()] + "，当前按本周记为第" + weekNumber + "周。<br>可在下方查看本周课表安排。";
-        todayPrimaryLink.href = "#weekly-schedule";
-        todayPrimaryLink.className = "join";
-        todayPrimaryLink.innerHTML = '查看本周课表 <span>→</span>';
-        var weekHtml = "";
-        for (var m = 0; m < Math.min(2, weekCourses.length); m++) {
-          weekHtml += renderSmallCourse(weekCourses[m]);
-        }
-        todaySecondaryList.innerHTML = weekHtml;
-      }
+      } catch (e) { console.error("今日课程区块渲染失败:", e); }
     }
 
     function safeRender() {
