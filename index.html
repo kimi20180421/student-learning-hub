@@ -51,6 +51,7 @@
     body {
       margin: 0;
       min-width: 750px;
+      color: #142650;
       color: var(--ink);
       background:
         radial-gradient(circle at 82% 8%, rgba(255, 217, 117, .36), transparent 23%),
@@ -135,6 +136,7 @@
       position: absolute;
       right: 230px;
       top: 26px;
+      color: #3159d9;
       color: var(--blue);
       font-size: 44px;
       transform: rotate(12deg);
@@ -156,6 +158,7 @@
       height: 3px;
       margin-right: 9px;
       border-radius: 3px;
+      background: #ff8956;
       background: var(--orange);
     }
 
@@ -184,7 +187,7 @@
       letter-spacing: -.06em;
     }
 
-    .date span { color: var(--muted); font-size: 13px; }
+    .date span { color: #66769a; color: var(--muted); font-size: 13px; }
 
     .layout {
       display: flex;
@@ -200,6 +203,7 @@
     .panel {
       border: 1px solid rgba(255,255,255,.82);
       border-radius: 26px;
+      background: rgba(252, 254, 255, .94);
       background: var(--paper);
       box-shadow: 0 20px 50px rgba(49, 89, 150, .10);
     }
@@ -214,7 +218,7 @@
     }
 
     h2 { margin: 0; font-size: 22px; letter-spacing: -.045em; }
-    .note { color: var(--muted); font-size: 13px; }
+    .note { color: #66769a; color: var(--muted); font-size: 13px; }
 
     .today-grid {
       display: flex;
@@ -231,6 +235,7 @@
       overflow: hidden;
       border-radius: 20px;
       color: #f8fbff;
+      background: #162755;
       background: var(--blue-deep);
     }
 
@@ -279,7 +284,9 @@
       margin-top: auto;
       padding: 10px 14px;
       border-radius: 999px;
+      color: #142650;
       color: var(--ink);
+      background: #ffc95b;
       background: var(--yellow);
       font-size: 13px;
       font-weight: 760;
@@ -289,6 +296,7 @@
 
     .primary-course--past {
       color: #96a3bb;
+      border: 1px solid rgba(43, 78, 145, .13);
       border: 1px solid var(--line);
       background: #fff;
     }
@@ -315,6 +323,7 @@
       display: flex;
       align-items: flex-start;
       padding: 18px;
+      border: 1px solid rgba(43, 78, 145, .13);
       border: 1px solid var(--line);
       border-radius: 18px;
       background: #f8fbff;
@@ -380,6 +389,7 @@
     .small-course-info > *:first-child { margin-top: 0; }
 
     .small-course-meta {
+      color: #66769a;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.6;
@@ -410,7 +420,9 @@
       align-items: center;
       min-height: 42px;
       padding-bottom: 10px;
+      border-bottom: 1px solid rgba(43, 78, 145, .13);
       border-bottom: 1px solid var(--line);
+      color: #66769a;
       color: var(--muted);
       font-size: 12px;
     }
@@ -427,6 +439,7 @@
       display: flex;
       align-items: center;
       min-height: 76px;
+      border-top: 1px solid rgba(43, 78, 145, .13);
       border-top: 1px solid var(--line);
       font-size: 13px;
     }
@@ -448,7 +461,7 @@
     .week-title strong { display: block; margin-bottom: 4px; font-size: 14px; }
     .week-row--past .week-time,
     .week-row--past .week-title strong { color: #9aa5ba; }
-    .teacher, .audience, .room { color: var(--muted); font-size: 12px; }
+    .teacher, .audience, .room { color: #66769a; color: var(--muted); font-size: 12px; }
 
     .room { font-family: "PingFang SC", "Hiragino Sans GB", sans-serif; }
 
@@ -475,12 +488,15 @@
 
     .week-action--current {
       color: #fff;
+      background: #3159d9;
       background: var(--blue);
+      border-color: #3159d9;
       border-color: var(--blue);
       box-shadow: 0 10px 20px rgba(49, 89, 217, .18);
     }
 
     .week-action--future {
+      color: #3159d9;
       color: var(--blue);
       background: transparent;
       border-color: rgba(49, 89, 217, .35);
@@ -490,6 +506,7 @@
       min-width: auto;
       height: auto;
       padding: 0;
+      color: #66769a;
       color: var(--muted);
       background: transparent;
       border: 0;
@@ -512,6 +529,7 @@
     .shortcut-item > div:nth-child(2) { flex: 1; min-width: 0; }
     .shortcut-item {
       min-height: 83px;
+      border-top: 1px solid rgba(43, 78, 145, .13);
       border-top: 1px solid var(--line);
     }
 
@@ -569,6 +587,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 14px;
+      color: #3159d9;
       color: var(--blue);
       background: #edf1ff;
     }
@@ -577,7 +596,7 @@
     .shortcut-item:nth-child(3) .icon { color: #277251; background: #e8f6ee; }
     .shortcut-item:nth-child(4) .icon { color: #744aa3; background: #f4ecff; }
     .shortcut-item strong { display: block; margin-bottom: 4px; font-size: 15px; }
-    .shortcut-item span { color: var(--muted); font-size: 12px; }
+    .shortcut-item span { color: #66769a; color: var(--muted); font-size: 12px; }
     .shortcut-item b { color: #8794ae; font-size: 19px; font-weight: 500; }
     .shortcut-item--popover b { display: none; }
 
@@ -588,6 +607,7 @@
       padding: 23px 24px;
       overflow: hidden;
       border-radius: 23px;
+      color: #142650;
       color: var(--ink);
       background: rgba(255, 201, 91, .74);
     }
