@@ -3,8 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>像素100&奇点同行 · 学习站 V2 视觉稿</title>
   <style>
+    #wx-tip {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,.85);
+      z-index: 99999;
+      padding: 40px 30px;
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    #wx-tip strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: #ffc95b;
+    }
+    #wx-tip .arrow {
+      position: absolute;
+      top: 10px;
+      right: 30px;
+      font-size: 48px;
+    }
+
     :root {
       --ink: #142650;
       --muted: #66769a;
@@ -268,7 +297,8 @@
       color: #96a3bb;
       background: transparent;
       border: 1px solid transparent;
-      padding-inline: 0;
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .small-courses { display: flex; flex-direction: column; gap: 12px; }
@@ -584,7 +614,7 @@
       .week-head .room,
       .week-row .room { display: none; }
       .right { flex-direction: column; }
-      .panel-inner, .weekly { padding-inline: 22px; }
+      .panel-inner, .weekly { padding-left: 22px; padding-right: 22px; }
     }
 
     /* Export-only mode compensates for high-DPI screenshot scaling. */
@@ -597,6 +627,13 @@
   </style>
 </head>
 <body>
+  <div id="wx-tip">
+    <div class="arrow">↗</div>
+    <strong>请在浏览器中打开</strong>
+    点击右上角 · · ·<br>
+    选择「在浏览器打开」<br>
+    即可正常访问学习站
+  </div>
   <main class="page">
     <header>
       <div class="brand">
@@ -731,6 +768,18 @@
     </div>
   </main>
   <script>
+    (function() {
+      try {
+        var ua = navigator.userAgent.toLowerCase();
+        var isWechat = ua.indexOf('micromessenger') !== -1;
+        var isQQ = ua.indexOf('qq/') !== -1 || ua.indexOf('qqbrowser') !== -1;
+        if (isWechat || isQQ) {
+          var tip = document.getElementById('wx-tip');
+          if (tip) tip.style.display = 'block';
+        }
+      } catch (e) {}
+    })();
+
     var schedule = [
       {
         startsAt: "2026-07-01T10:00:00",
