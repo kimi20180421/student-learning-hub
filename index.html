@@ -92,17 +92,22 @@
     .hero,
     .panel,
     .tip {
-      border: 1px solid #d8e2f0;
-      background: #fff;
       border-radius: 22px;
       box-shadow: 0 16px 34px rgba(49, 89, 150, .08);
     }
 
     .hero {
       display: flex;
-      padding: 24px;
+      padding: 24px 8px 18px;
       position: relative;
       overflow: hidden;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .panel,
+    .tip {
+      background: rgba(255, 255, 255, .94);
     }
 
     .hero::after {
@@ -277,7 +282,6 @@
     .join span { margin-left: 6px; }
 
     .primary-course--past {
-      border: 1px solid #d8e2f0;
       background: #f5f7fb;
       background-image: none;
       color: #66769a;
