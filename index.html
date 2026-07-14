@@ -11,7 +11,11 @@
     body {
       margin: 0;
       color: #142650;
-      background: #f3f6fb;
+      background: #eaf2fb;
+      background-image:
+        radial-gradient(circle at 82% 8%, rgba(255, 217, 117, .28), transparent 22%),
+        radial-gradient(circle at 12% 36%, rgba(149, 211, 255, .30), transparent 28%),
+        linear-gradient(145deg, #edf6ff 0%, #dcecff 52%, #e9f4ff 100%);
       font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SimSun", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
@@ -53,6 +57,7 @@
       max-width: 1180px;
       margin: 0 auto;
       padding: 20px 16px 40px;
+      position: relative;
     }
 
     .page-header {
@@ -89,11 +94,25 @@
     .tip {
       border: 1px solid #d8e2f0;
       background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 16px 34px rgba(49, 89, 150, .08);
     }
 
     .hero {
       display: flex;
       padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "✦";
+      position: absolute;
+      top: 24px;
+      right: 210px;
+      color: rgba(49, 89, 217, .25);
+      font-size: 42px;
+      line-height: 1;
     }
 
     .hero > div:first-child {
@@ -108,6 +127,17 @@
       line-height: 1.5;
     }
 
+    .eyebrow:before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 3px;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: #ff8956;
+      border-radius: 3px;
+    }
+
     .hero-title {
       margin: 0;
       font-family: "Songti SC", "STSong", "SimSun", "宋体", serif;
@@ -117,7 +147,8 @@
     }
 
     .hero-highlight {
-      color: #3159d9;
+      color: inherit;
+      background: linear-gradient(transparent 70%, rgba(255, 201, 91, .82) 0);
     }
 
     .date {
@@ -173,6 +204,7 @@
       font-size: 22px;
       line-height: 1.4;
       font-weight: 500;
+      letter-spacing: -.03em;
     }
 
     .note {
@@ -189,14 +221,30 @@
     .primary-course {
       width: 60%;
       padding: 20px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
       background: #1b3366;
+      background-image: linear-gradient(135deg, #162755 0%, #244487 100%);
       color: #fff;
+    }
+
+    .primary-course:after {
+      content: "01";
+      position: absolute;
+      right: -8px;
+      bottom: -32px;
+      color: rgba(255, 255, 255, .06);
+      font-size: 132px;
+      line-height: 1;
+      font-weight: 500;
     }
 
     .tag {
       font-size: 16px;
       line-height: 1.4;
       font-weight: 500;
+      color: rgba(255, 255, 255, .82);
     }
 
     .course-title {
@@ -223,6 +271,7 @@
       font-size: 13px;
       line-height: 1.5;
       font-weight: 500;
+      border-radius: 999px;
     }
 
     .join span { margin-left: 6px; }
@@ -230,7 +279,12 @@
     .primary-course--past {
       border: 1px solid #d8e2f0;
       background: #f5f7fb;
+      background-image: none;
       color: #66769a;
+    }
+
+    .primary-course--past:after {
+      color: rgba(20, 38, 80, .06);
     }
 
     .primary-course--past .tag,
@@ -254,10 +308,15 @@
       padding: 16px;
       border: 1px solid #d8e2f0;
       background: #fff;
+      border-radius: 16px;
     }
 
     .small-course + .small-course {
       margin-top: 12px;
+    }
+
+    .small-course:nth-child(2) {
+      background: #f3f8ff;
     }
 
     .time {
@@ -299,6 +358,7 @@
       font-size: 12px;
       line-height: 1.4;
       font-weight: 500;
+      border-radius: 4px;
     }
 
     .course-badge--upgrade {
@@ -409,11 +469,13 @@
       font-size: 12px;
       line-height: 1.4;
       font-weight: 500;
+      border-radius: 999px;
     }
 
     .week-action--current {
       background: #3159d9;
       color: #fff;
+      box-shadow: 0 8px 16px rgba(49, 89, 217, .14);
     }
 
     .week-action--past {
@@ -442,7 +504,12 @@
       text-align: center;
       line-height: 42px;
       font-size: 18px;
+      border-radius: 12px;
     }
+
+    .shortcut-item:nth-child(2) .icon { color: #c95d2d; background: #fff0e5; }
+    .shortcut-item:nth-child(3) .icon { color: #277251; background: #e8f6ee; }
+    .shortcut-item:nth-child(4) .icon { color: #744aa3; background: #f4ecff; }
 
     .shortcut-item > div:nth-child(2) {
       flex: 1;
@@ -468,7 +535,20 @@
     }
 
     .tip {
-      background: #fff7dc;
+      position: relative;
+      overflow: hidden;
+      background: #fff2bd;
+      background-image: linear-gradient(135deg, rgba(255, 239, 182, .95) 0%, rgba(255, 214, 104, .62) 100%);
+    }
+
+    .tip:after {
+      content: "✦";
+      position: absolute;
+      right: 14px;
+      bottom: -18px;
+      color: rgba(20, 38, 80, .14);
+      font-size: 84px;
+      line-height: 1;
     }
 
     .tip-kicker {
@@ -507,6 +587,10 @@
         margin-left: 0;
         margin-top: 16px;
         text-align: left;
+      }
+
+      .hero:after {
+        display: none;
       }
     }
 
