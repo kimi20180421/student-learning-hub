@@ -380,9 +380,15 @@
       background: #ece8ff;
     }
 
+    .week-list {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .week-head,
     .week-row {
       display: flex;
+      min-width: 1260px;
       padding: 12px 0;
       border-top: 1px solid #e3eaf5;
     }
@@ -414,7 +420,8 @@
 
     .week-head > div:nth-child(2),
     .week-row > div:nth-child(2) {
-      flex: 1;
+      width: 720px;
+      flex: 0 0 720px;
     }
 
     .week-head > div:nth-child(3),
@@ -1078,6 +1085,15 @@
         badge: "新增",
         room: "842-203-753",
         href: "https://meeting.tencent.com/dm/tzSvCrvHxyfN"
+      },
+      {
+        startsAt: "2026-07-18T16:30:00",
+        title: "设计的内核、<br>立场与边界",
+        plainTitle: "设计的内核、立场与边界",
+        teacher: "不愿透露姓名的学长",
+        audience: "选听",
+        room: "581-320-643",
+        href: "https://meeting.tencent.com/dm/FalhSeLfFsYY"
       },
       {
         startsAt: "2026-07-23T10:30:00",
