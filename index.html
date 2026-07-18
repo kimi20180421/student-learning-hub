@@ -380,15 +380,9 @@
       background: #ece8ff;
     }
 
-    .week-list {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
     .week-head,
     .week-row {
       display: flex;
-      min-width: 1260px;
       padding: 12px 0;
       border-top: 1px solid #e3eaf5;
     }
@@ -420,31 +414,31 @@
 
     .week-head > div:nth-child(2),
     .week-row > div:nth-child(2) {
-      width: 720px;
-      flex: 0 0 720px;
+      flex: 1;
+      min-width: 0;
     }
 
     .week-head > div:nth-child(3),
     .week-row > div:nth-child(3) {
-      width: 136px;
+      width: 110px;
       flex-shrink: 0;
     }
 
     .week-head > div:nth-child(4),
     .week-row > div:nth-child(4) {
-      width: 100px;
+      width: 92px;
       flex-shrink: 0;
     }
 
     .week-head > div:nth-child(5),
     .week-row > div:nth-child(5) {
-      width: 112px;
+      width: 96px;
       flex-shrink: 0;
     }
 
     .week-head > div:nth-child(6),
     .week-row > div:nth-child(6) {
-      width: 108px;
+      width: 92px;
       flex-shrink: 0;
       text-align: center;
     }
